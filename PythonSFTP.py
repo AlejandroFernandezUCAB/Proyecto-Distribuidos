@@ -8,7 +8,9 @@ def obtenerCredenciales():
     pkeyPath = ''
     user = ''
     try:
+        # leemos
         configFile = open('user.conf','r') 
+        # quitamos saltos de linea
         user = configFile.readline().replace('\n','')
         pkeyPath = str(configFile.readline()).replace('\n','')
         pkeyPass = str(configFile.readline()).replace('\n','')
@@ -23,6 +25,10 @@ def obtenerCredenciales():
         configFile.write(pkeyPath)
         configFile.write(pkeyPass)
     # print 'usuario {} \nruta {} \nclave {}'.format(user, pkeyPath, pkeyPass)
+        # quitamos saltos de linea
+        user = user.replace('\n','')
+        pkeyPath = pkeyPath.replace('\n','')
+        pkeyPass = pkeyPass.replace('\n','')
     return [user, pkeyPath, pkeyPass]
 
 def conexionSftp(credenciales):
@@ -46,4 +52,5 @@ if __name__ == '__main__':
     print credenciales
     conexion = conexionSftp(credenciales)
 
+    # Solo cambia el comando que quieres hacer aqui
     conexion.mkdir('holaMundo', mode=664)
