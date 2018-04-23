@@ -57,9 +57,15 @@ if __name__ == '__main__':
     # Solo cambia el comando que quieres hacer aqui
     # conexion.mkdir('holaMundo', mode=664)
 
-    conexion.cd('/home/group/distribuidos/201825_25789/13')
-    #Aqui hay que colocar el archivo a subir
-    conexion.put('HolaMundoFTP')
-    # for attr in conexion.listdir_attr():
-    #     print attr.filename, attr
+    with conexion.cd('/home/group/distribuidos/201825_25789/13'):
+        #Aqui hay que colocar el archivo a subir
+        conexion.put('HolaMundoFTP')
+        for attr in conexion.listdir_attr():
+            print attr.filename, attr
 
+        # #Aqui se coloca la direccion donde se va a subir el archivo, en este caso somos el grupo 13
+        # with sftp.cd('/home/group/distribuidos/201825_25789/13'):
+        #     #Aqui hay que colocar el archivo a subir
+        #     sftp.put('HolaMundoFTP')
+        #     for attr in sftp.listdir_attr():
+        #         print attr.filename, attr
