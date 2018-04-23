@@ -1,5 +1,7 @@
 import pysftp
 
+BEEHIVE = '192.168.25.100'
+BEEHIVE_PUB = '200.2.13.226'
 
 # lee las credenciales del archivo de configuracion.
 # Si no lo encuentra las crea...
@@ -34,7 +36,7 @@ def obtenerCredenciales():
 def conexionSftp(credenciales):
 
     return pysftp.Connection(
-        '192.168.25.100',
+        BEEHIVE_PUB,
         username=str(credenciales[0]), 
         private_key=str(credenciales[1]), 
         private_key_pass=str(credenciales[2]) 
@@ -53,4 +55,11 @@ if __name__ == '__main__':
     conexion = conexionSftp(credenciales)
 
     # Solo cambia el comando que quieres hacer aqui
-    conexion.mkdir('holaMundo', mode=664)
+    # conexion.mkdir('holaMundo', mode=664)
+
+    conexion.cd('/home/group/distribuidos/201825_25789/13')
+    #Aqui hay que colocar el archivo a subir
+    conexion.put('HolaMundoFTP')
+    # for attr in conexion.listdir_attr():
+    #     print attr.filename, attr
+
