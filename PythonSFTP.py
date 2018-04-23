@@ -2,6 +2,7 @@ import pysftp
 
 BEEHIVE = '192.168.25.100'
 BEEHIVE_PUB = '200.2.13.226'
+CARPETA_COMPARTIDA = '/home/group/distribuidos/201825_25789/13'
 
 # lee las credenciales del archivo de configuracion.
 # Si no lo encuentra las crea...
@@ -57,7 +58,7 @@ if __name__ == '__main__':
     # Solo cambia el comando que quieres hacer aqui
     # conexion.mkdir('holaMundo', mode=664)
 
-    with conexion.cd('/home/group/distribuidos/201825_25789/13'):
+    with conexion.cd(CARPETA_COMPARTIDA):
         #Aqui hay que colocar el archivo a subir
         conexion.put('HolaMundoFTP')
         for attr in conexion.listdir_attr():
