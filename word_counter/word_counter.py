@@ -9,7 +9,7 @@ import time
 # NOTA: se debera leer el archivo de palabras y llenar ambos diccionarios. Esta data es de prueba.
 # mapa que tiene las palabras, el numero de incidencias, y las lineas en donde se encuentran
 # (deben estar en minuscula)
-mapa = {'regurgitación': [0,[]], 'aurícula': [0,[]], 'pericarditis': [0,[]], 'insuficiencia mitral': [0,[]], 'trombosis intraventricular': [0,[]]}
+mapa = {'regurgitación': [0,None], 'aurícula': [0,None], 'pericarditis': [0,None], 'insuficiencia mitral': [0,None], 'trombosis intraventricular': [0,None]}
 # diccionario que tiene las palabras y sus definiciones
 diccionario = {'regurgitación': '(regurgitacion => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago)' ,
  'aurícula': ('aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas'), 
@@ -31,11 +31,11 @@ def contarPalabras(linea, indice):
         # time.sleep(1)
 
         if incidencias != 0:
-            # if mapa[palabra] == 0: # si es la primera incidencia
-            #     lineas_libro[indice] = linea.replace(palabra,diccionario[palabra]) # reemplaza la palabra por su definicion...
+
+            if mapa[palabra][0] == 0: # si es la primera incidencia
+                mapa[palabra][1] = indice  # guardo la linea donde la encontre
 
             mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
-            mapa[palabra][1].append(indice)
 
 
 
@@ -58,11 +58,8 @@ def main():
             contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
         
         #imprimir cantidad de palabras
-        # print (mapa)
-        print ('[')
-        for item in mapa.values():
-            print(item[0])
-        print (']')
+        print (mapa)
+
 
     # F A S E  2
     # -----------
