@@ -1,27 +1,23 @@
 # -*- coding: utf-8 -()
 
-import time
-# import unicodedata # necesario para funcion eliminar_tildes
-
-# def elimina_tildes(s):
-#    return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
+# import time
 
 # NOTA: se debera leer el archivo de palabras y llenar ambos diccionarios. Esta data es de prueba.
 # mapa que tiene las palabras, el numero de incidencias, y las lineas en donde se encuentran
+    # mapa['<palabra>'] = [  <numero de incidencias>  ,  <numero de linea de la primera incidencia>]
 # (deben estar en minuscula)
 mapa = {'regurgitación': [0,None], 'aurícula': [0,None], 'pericarditis': [0,None], 'insuficiencia mitral': [0,None], 'trombosis intraventricular': [0,None]}
 # diccionario que tiene las palabras y sus definiciones
 diccionario = {'regurgitación': '(regurgitacion => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago)' ,
- 'aurícula': ('aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas'), 
+ 'aurícula': '(aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas)', 
  'pericarditis': '(pericarditis => Inflamación del pericardio)', 
  'insuficiencia mitral': '(insuficiencia mitral => Reflujo de sangre ocasionado por la incapacidad de la válvula mitral del corazón de cerrarse firmemente)', 
  'trombosis intraventricular': '( trombosis intraventricular => complicación frecuente en el infarto agudo del miocardio de localización anterior, asociado a discinesia ventricular.)'}
 
-lineas_libro = []
+PATH_LIBRO = 'C:\\Users\\gian\\Documents\\Python\\word_counter\\cardiologia.txt'
 
 # recibe: linea del libro y su indice respectivo
 # devuleve: un diccionario que tiene la siguiente composicion:
-    # mapa['<palabra>'] = <numero de incidencias>
 def contarPalabras(linea, indice):
     # iteramos las llaves del mapa previamente creado
     for palabra in mapa.keys():
@@ -38,12 +34,21 @@ def contarPalabras(linea, indice):
             mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
 
 
+# reemplaza la primera incidencia de la palabra
+def reemplazarPrimeraPalabra(lineas_libro):
+    # recorremos el mapa
+    for palabra in mapa.keys():
+        # si se encontro la palabra
+        if mapa[palabra][0] != 0:
+            # ir a la linea del libro y reemplazar palabra por definicion
+            lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].replace(palabra,diccionario[palabra])
+            # print ('\N-----\NVOY A REEMPLAZAR\NANTES:{}\NDESPUES:{}\N-----\N')
 
 def main():
     # F A S E  1
     # -----------
     # leer libro y contar palabras
-    with open('C:\\Users\\gian\\Documents\\Python\\word_counter\\cardiologia.txt','r') as libro:
+    with open(PATH_LIBRO,'r') as libro:
         # convertimos las lineas del libro en una lista de lineas
         lineas_libro = libro.readlines()
 
@@ -63,11 +68,12 @@ def main():
 
     # F A S E  2
     # -----------
-    # Modificar la primera instancia de las palabras encontradas
-        # iteramos por cada palabra del mapa y la modificamos accediendo a la(s) linea(s correspondiente(s)
+    # reemplazamos las primeras incidencias
+    reemplazarPrimeraPalabra(lineas_libro)
 
-    # with open('libroModificado.txt','w') as target:
-    #     target.writelines(lineas_libro)
+    # escribimos los cambios
+    with open('libroModificado.txt','w') as target:
+        target.writelines(lineas_libro)
 
 if __name__ == '__main__':
     main()
