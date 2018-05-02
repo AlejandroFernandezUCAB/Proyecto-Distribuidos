@@ -1,0 +1,115 @@
+beehive-node2: Creando archivo ./infile
+beehive-node2: Tansfiriendo archivo /home/rjrodrig/wp/infile a /local_home/rjrodrig en los nodos beehive-node[2-3,5-12]
+beehive-node2: Synconizando directorios /home/rjrodrig/wp/data a /local_home/rjrodrig/data en los nodos beehive-node[2-3,5-12]
+beehive-node2: Ejecutando el programa en Paralelo
+[prun] Master compute host = beehive-node2
+[prun] Resource manager = slurm
+[prun] Launch cmd = mpirun python /home/rjrodrig/wp/pchksum_local.py ./infile ./outfile (family=openmpi3)
+rank 18 line 91: ./data/request-key.conf
+rank 19 line 96: ./data/inittab
+rank 9 line 46: ./data/filesystems
+rank 6 line 31: ./data/services
+rank 8 line 41: ./data/centos-release-upstream
+rank 16 line 81: ./data/rsyncd.conf
+rank 7 line 36: ./data/group
+rank 17 line 86: ./data/nsswitch.conf.bak
+rank 11 line 56: ./data/dracut.conf
+rank 10 line 51: ./data/protocols
+rank 14 line 71: ./data/nanorc
+rank 15 line 76: ./data/csh.login
+rank 13 line 66: ./data/issue.net
+rank 0 line 1: ./data/iso/alpine-virt-3.7.0-x86_64.iso
+rank 1 line 6: ./data/iso/alpine-standard-3.6.1-x86_64.iso
+rank 4 line 21: ./data/aliases.db
+rank 12 line 61: ./data/ld.so.cache
+rank 5 line 26: ./data/logrotate.conf
+rank 7 line 37: ./data/crontab
+rank 19 line 97: ./data/environment
+rank 19 line 98: ./data/wgetrc
+rank 9 line 47: ./data/ethertypes
+rank 15 line 77: ./data/DIR_COLORS.256color
+rank 18 line 92: ./data/GeoIP.conf.default
+rank 15 line 78: ./data/redhat-release
+rank 14 line 72: ./data/system-release-cpe
+rank 13 line 67: ./data/man_db.conf
+rank 16 line 82: ./data/sysctl.conf
+rank 19 line 99: ./data/machine-id
+rank 17 line 87: ./data/fstab
+rank 15 line 79: ./data/subgid
+rank 15 line 80: ./data/login.defs
+rank 18 line 93: ./data/locale.conf
+rank 8 line 42: ./data/centos-release
+rank 19 line 100: ./data/csh.cshrc
+rank 13 line 68: ./data/os-release
+rank 18 line 94: ./data/quotagrpadmins
+rank 9 line 48: ./data/issue
+rank 12 line 62: ./data/rsyslog.conf
+rank 18 line 95: ./data/ld.so.conf
+rank 13 line 69: ./data/motd
+rank 13 line 70: ./data/vimrc
+rank 11 line 57: ./data/shells
+rank 14 line 73: ./data/profile
+rank 14 line 74: ./data/virc
+rank 12 line 63: ./data/ohpc-release
+rank 14 line 75: ./data/printcap
+rank 7 line 38: ./data/mime.types
+rank 16 line 83: ./data/resolv.conf
+rank 5 line 27: ./data/hosts
+rank 4 line 22: ./data/DIR_COLORS.lightbgcolor
+rank 5 line 28: ./data/makedumpfile.conf.sample
+rank 5 line 29: ./data/rpc
+rank 9 line 49: ./data/aliases
+rank 8 line 43: ./data/dnsmasq.conf
+rank 9 line 50: ./data/ntp.conf
+rank 12 line 64: ./data/kdump.conf
+rank 12 line 65: ./data/nsswitch.conf.rpmnew
+rank 17 line 88: ./data/GREP_COLORS
+rank 10 line 52: ./data/passwd-
+rank 5 line 30: ./data/mke2fs.conf
+rank 8 line 44: ./data/subuid
+rank 8 line 45: ./data/statetab
+rank 16 line 84: ./data/netconfig
+rank 17 line 89: ./data/mailcap
+rank 16 line 85: ./data/group-
+rank 11 line 58: ./data/GeoIP.conf
+rank 10 line 53: ./data/libuser.conf
+rank 11 line 59: ./data/screenrc
+rank 7 line 39: ./data/hosts.deny
+rank 17 line 90: ./data/DIR_COLORS
+rank 10 line 54: ./data/hostname
+rank 11 line 60: ./data/networks
+rank 4 line 23: ./data/idmapd.conf
+rank 10 line 55: ./data/e2fsck.conf
+rank 4 line 24: ./data/passwd
+rank 7 line 40: ./data/bashrc
+rank 6 line 32: ./data/hosts.allow
+rank 6 line 33: ./data/krb5.conf
+rank 4 line 25: ./data/favicon.png
+rank 6 line 34: ./data/mtab
+rank 6 line 35: ./data/inputrc
+rank 2 line 11: ./data/iso/debian-testing-amd64-xfce-CD-1.iso
+rank 3 line 16: ./data/host.conf
+rank 3 line 17: ./data/magic
+rank 3 line 18: ./data/quotatab
+rank 3 line 19: ./data/kshrc
+rank 3 line 20: ./data/exports
+rank 0 line 2: ./data/iso/alpine-standard-3.7.0-x86_64.iso
+rank 1 line 7: ./data/iso/alpine-extended-3.6.0-x86_64.iso
+rank 0 line 3: ./data/iso/alpine-standard-3.6.0-x86_64.iso
+rank 0 line 4: ./data/iso/debian-8.5.0-amd64-DVD-1.iso
+rank 2 line 12: ./data/iso/alpine-virt-3.6.1-x86_64.iso
+rank 2 line 13: ./data/adjtime
+rank 2 line 14: ./data/rwtab
+rank 2 line 15: ./data/nfs.conf
+rank 1 line 8: ./data/iso/debian-9.3.0-amd64-netinst.iso
+rank 1 line 9: ./data/iso/ubuntu-16.04-server-amd64.iso
+rank 1 line 10: ./data/iso/alpine-virt-3.6.0-x86_64.iso
+rank 0 line 5: ./data/iso/debian-9.3.0-amd64-DVD-1.iso
+
+real	3m24.061s
+user	2m17.392s
+sys	0m11.105s
+beehive-node2: Tansfiriendo archivos /local_home/rjrodrig/outfile* a /home/rjrodrig/wp en los nodos beehive-node[2-3,5-12]
+beehive-node2: Eliminando archivos en los nodos beehive-node[2-3,5-12]
+beehive-node2: Preparando archivos finales.
+rm: cannot remove ‘./infile’: No such file or directory

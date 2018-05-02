@@ -1,0 +1,18 @@
+----------Preparando el entorno-------------
+	Modulos cargados...
+----------=====================-------------
+
+
+
+---------- Ejecucion de Script de Python -------------
+[prun] Master compute host = beehive-node1
+[prun] Resource manager = slurm
+[prun] Launch cmd = mpirun p2pmessage.py (family=openmpi3)
+Hola, soy el proceso 0 de 2 en el nodo beehive-node1
+    Enviando el diccionario...{'a': 7, 'b': 3.14}
+Hola, soy el proceso 1 de 2 en el nodo beehive-node1
+    Recibiendo el diccionario...
+data = {'a': 7, 'b': 3.14}
+----------=====================-------------
+
+
