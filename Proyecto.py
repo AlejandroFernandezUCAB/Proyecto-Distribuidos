@@ -25,7 +25,7 @@ PATH_LIBRO = 'cardiologia.txt'
 # ----- Funciones Para Leer, Contar y Modificar ------
 
 # recibe: linea del libro y su indice respectivo
-# devuleve: un diccionario que tiene la siguiente composicion:
+# llena constantemente el mapa de palabras
 def contarPalabras(linea, indice):
     # A D V E R T E C I A
     # ---------------------
@@ -129,8 +129,8 @@ else:
         # a - recibe el libro del anterior (Nx-1  -->  Nx)
         # data = comm.recv(source=MPI.ANY_SOURCE, tag=77)
         prev_node = int((rank+size-1)%size)
-        data = comm.recv(source=prev_node,tag=77)
-        sys.stdout.write('Proceso %s en %s...Recibiendo de %s... %s\n' % (rank,name,prev_node,str(data)) )
+        libro_modificado = list(comm.recv(source=prev_node,tag=77))
+        sys.stdout.write('Proceso %s en %s...Recibiendo de %s... %s\n' % (rank,name,prev_node,str(libro_modificado)) )
 
         # b - reemplaza la primera incidencia de todas sus palabras
         reemplazarPrimeraPalabra(lineas_libro)
