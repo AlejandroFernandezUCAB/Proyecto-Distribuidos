@@ -9,9 +9,9 @@ import random
 # ----- Variables Globales ------
 # NOTA: se debera leer el archivo de palabras y llenar ambos diccionarios. Esta data es de prueba.
 # mapa que tiene las palabras, el numero de incidencias, y las lineas en donde se encuentran
-    # mapa['<palabra>'] = [  <numero de incidencias>  ,  <numero de linea de la primera incidencia>]
+    # mapa['<palabra>'] = [  <numero de incidencias>  ,  <numero de linea de la primera incidencia> , <lineas extras agregadas>]
 # (deben estar en minuscula)
-mapa = {'regurgitación': [0,None], 'aurícula': [0,None], 'pericarditis': [0,None], 'insuficiencia mitral': [0,None], 'trombosis intraventricular': [0,None]}
+mapa = {'regurgitación': [0,None,None], 'aurícula': [0,None,None], 'pericarditis': [0,None,None], 'insuficiencia mitral': [0,None,None], 'trombosis intraventricular': [0,None,None]}
 # diccionario que tiene las palabras y sus definiciones
 diccionario = {'regurgitación': '(regurgitación => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago)' ,
  'aurícula': '(aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas)', 
@@ -51,9 +51,12 @@ def contarPalabras(linea, indice):
 
             if mapa[palabra][0] == 0: # si es la primera incidencia
                 mapa[palabra][1] = indice  # guardo la linea donde la encontre
+                mapa[palabra][2] = contarSaltosDeLinea(diccionario[palabra]) # guardo el nro de lineas extra agregadas por la definicion
 
             mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
 
+def contarSaltosDeLinea(cadena):
+    return cadena.count('\n',0)
 
 # reemplaza la primera incidencia de la palabra
 def reemplazarPrimeraPalabra(lineas_libro):
@@ -73,100 +76,111 @@ def reemplazarPrimeraPalabra(lineas_libro):
 #  ----- /Funciones Para Leer, Contar y Modificar ------
 
 
+def main():
+    # obtengo todos los nodos del mundo
+    comm = MPI.COMM_WORLD
+    # obtengo el rango del nodo actual
+    rank = comm.Get_rank()
+    # obtengo el nombre del nodo actual
+    name = MPI.Get_processor_name()
+    # obtengo la cantidad de nodos
+    size = MPI.COMM_WORLD.Get_size()
 
-# obtengo todos los nodos del mundo
-comm = MPI.COMM_WORLD
-# obtengo el rango del nodo actual
-rank = comm.Get_rank()
-# obtengo el nombre del nodo actual
-name = MPI.Get_processor_name()
-# obtengo la cantidad de nodos
-size = MPI.COMM_WORLD.Get_size()
-
-# si soy el coordinador (n-1)
-if rank == size:
-    # F A S E  1
-    # 1 - Enviar libro y lista de palabras
-        # NO IMPLEMENTADO
-    # 2 - Recibir palabras ordenadas y sus cantidades, de los trabajadores.
-        #     (Recibe de 2 en 2, hace merge sort y luego guarda en archivo temporal local. De 5 a 10 archivos temporales).
-        # NO IMPLEMENTADO
-    # F A S E  2
-    # 1 - Combinar y ordenar las palabras en los archivos temporales con merge sort
-        # NO IMPLEMENTADO
-    # 2 - Recibir libro modificado por los nodos del anillo
-        # NO IMPLEMENTADO
+    # si soy el coordinador (n-1)
+    if rank == size:
+        pass
+        # F A S E  1
+        # 1 - Enviar libro y lista de palabras
+            # NO IMPLEMENTADO
+        # 2 - Recibir palabras ordenadas y sus cantidades, de los trabajadores.
+            #     (Recibe de 2 en 2, hace merge sort y luego guarda en archivo temporal local. De 5 a 10 archivos temporales).
+            # NO IMPLEMENTADO
+        # F A S E  2
+        # 1 - Combinar y ordenar las palabras en los archivos temporales con merge sort
+            # NO IMPLEMENTADO
+        # 2 - Recibir libro modificado por los nodos del anillo
+            # NO IMPLEMENTADO
 
 
-# si soy el trabajador
-else:
-    # F A S E  1
-    # 1 - Recibir libro y palabras
-        # NO IMPLEMENTADO
-    # 2 - Buscar palabras y contarlas (adicionalmente se guarda la posicion de la primera linea)
-    lineas_libro = []
-    with open(PATH_LIBRO,'r') as libro:
-        # convertimos las lineas del libro en una lista de lineas
-        lineas_libro = libro.readlines()
-
-        print ('El libro tiene {} Lineas.\nBuscando palabras y generando mapa de incidencias...'.format( str(len(lineas_libro)) ))
-
-        for idx, linea in enumerate(lineas_libro):
-            # print(idx)
-            contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
-        
-        #imprimir cantidad de palabras
-        print ( '\nProceso ' + str(rank) ' :\n'+ str(mapa))
-
-    # 3 - Ordenar las palabras encontradas
-        # NO IMPLEMENTADO
-    # 4 - Enviar lista de palabras y sus cantidades al coordinador
-        # NO IMPLEMENTADO
-
-    # F A S E  2
-    # 1 - si el rango del trabajador es diferente a 0 (x != 0)
-    if rank != 0:
-        # a - recibe el libro del anterior (Nx-1  -->  Nx)
-        # data = comm.recv(source=MPI.ANY_SOURCE, tag=77)
-        prev_node = int((rank+size-1)%size)
-        libro_modificado = list(comm.recv(source=prev_node,tag=77))
-        sys.stdout.write('Proceso %s en %s...Recibiendo de %s... %s\n' % (rank,name,prev_node,str(libro_modificado)) )
-
-        # b - reemplaza la primera incidencia de todas sus palabras
-        reemplazarPrimeraPalabra(lineas_libro)
-        # escribimos los cambios
-        with open('libroModificado.txt','w') as target:
-            target.writelines(lineas_libro)
-
-        # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamañoAnillo )
-        next_node = int((rank+1)%size)
-
-        sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando %s...\n\
-        ' % (rank,name, next_node, str(number2beSent)) )
-
-        comm.send( number2beSent , dest=next_node, tag=77)
-
-    # 2 - si el rango del trabajador es igual a 0 (x == 0)
+    # si soy el trabajador
     else:
-        # a - reemplaza la primera incidencia de todas sus palabras
-        reemplazarPrimeraPalabra(lineas_libro)
-        # escribimos los cambios
-        with open('libroModificado.txt.'+str(size),'w') as target:
-            target.writelines(lineas_libro)
-        # b - envia  el libro al siguiente
-        next_node = int((rank+1)%size)
-
-        sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando %s...\n\
-        ' % (rank,name, next_node, str(number2beSent)) )
-
-        comm.send( number2beSent , dest=next_node, tag=77)
-        # c - recibo el libro del ultimo nodo del anillo, y me bloqueo 
-        #     mientras me llega el mensaje del ultimo (IMPORTANTE)
+        # F A S E  1
+        # 1 - Recibir libro y palabras
             # NO IMPLEMENTADO
-        # d - envio libro modificado por todos los trabajadores a el coordinador
+        # 2 - Buscar palabras y contarlas (adicionalmente se guarda la posicion de la primera linea)
+        lineas_libro = []
+        with open(PATH_LIBRO,'r') as libro:
+            # convertimos las lineas del libro en una lista de lineas
+            lineas_libro = libro.readlines()
+
+            print ('El libro tiene {} Lineas.\nBuscando palabras y generando mapa de incidencias...'.format( str(len(lineas_libro)) ))
+
+            for idx, linea in enumerate(lineas_libro):
+                # print(idx)
+                contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
+            
+            #imprimir cantidad de palabras
+            print ( '\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa))
+
+        # 3 - Ordenar las palabras encontradas
+            # NO IMPLEMENTADO
+        # 4 - Enviar lista de palabras y sus cantidades al coordinador
             # NO IMPLEMENTADO
 
+        # F A S E  2
+        # 1 - si el rango del trabajador es diferente a 0 (x != 0)
+        if rank != 0:
+            # a - recibe el libro del anterior (Nx-1  -->  Nx)
+            # data = comm.recv(source=MPI.ANY_SOURCE, tag=77)
+            prev_node = int((rank+size-1)%size)
+            libro_modificado = list(comm.recv(source=prev_node,tag=77))
+            sys.stdout.write('Proceso %s en %s...Recibiendo de %s...\n' % (rank,name,prev_node) )
 
+            # b - reemplaza la primera incidencia de todas sus palabras
+            reemplazarPrimeraPalabra(libro_modificado)
+            # escribimos los cambios
+            with open('libroModificado.txt'+rank,'w') as target:
+                target.writelines(libro_modificado)
+
+            # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamañoAnillo )
+            next_node = int((rank+1)%size)
+
+            with open('libroModificado.txt'+rank,'r') as target:
+                sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
+                ' % (rank,name, next_node) )
+
+                comm.send( target.readlines() , dest=next_node, tag=77)
+
+        # 2 - si el rango del trabajador es igual a 0 (x == 0)
+        else:
+            # a - reemplaza la primera incidencia de todas sus palabras
+            reemplazarPrimeraPalabra(lineas_libro)
+            # escribimos los cambios
+            with open('libroModificado.txt.'+str(size),'w') as target:
+                target.writelines(lineas_libro)
+                
+            # b - envia  el libro al siguiente
+            next_node = int((rank+1)%size)
+            with open('libroModificado.txt.'+str(size),'r') as target:
+                sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
+                ' % (rank,name, next_node) )
+
+                comm.send( target.readlines() , dest=next_node, tag=77)
+            # c - recibo el libro del ultimo nodo del anillo, y me bloqueo 
+            #     mientras me llega el mensaje del ultimo (IMPORTANTE)
+            libro_modificado = list(comm.recv(source = size-1 ,tag=77))
+
+            # Linea de prueba
+            with open('libroModificado RESULTATE.txt.','w') as target:
+                target.writelines(libro_modificado)
+
+            # d - envio libro modificado por todos los trabajadores a el coordinador
+                # NO IMPLEMENTADO
+
+
+
+if __name__ == '__main__':
+    main()
 
 
 # Proyecto 1 de Sistemas Distribuidos
