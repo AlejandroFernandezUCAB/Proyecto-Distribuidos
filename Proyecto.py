@@ -156,13 +156,13 @@ else:
         # b - envia  el libro al siguiente
         next_node = int((rank+1)%size)
 
-        sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando %s...\n\
-        ' % (rank,name, next_node, str(number2beSent)) )
+        sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
+        ' % (rank,name, next_node) )
 
-        comm.send( number2beSent , dest=next_node, tag=77)
+        comm.send( lineas_libro , dest=next_node, tag=77)
         # c - recibo el libro del ultimo nodo del anillo, y me bloqueo 
         #     mientras me llega el mensaje del ultimo (IMPORTANTE)
-            # NO IMPLEMENTADO
+        Recv(buf=lineas_libro,source=size-1,tag=77,status=None)
         # d - envio libro modificado por todos los trabajadores a el coordinador
             # NO IMPLEMENTADO
 
