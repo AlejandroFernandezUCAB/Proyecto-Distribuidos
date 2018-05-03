@@ -104,7 +104,7 @@ else:
     # 1 - Recibir libro y palabras
         # NO IMPLEMENTADO
     # 2 - Buscar palabras y contarlas (adicionalmente se guarda la posicion de la primera linea)
-
+    lineas_libro = []
     with open(PATH_LIBRO,'r') as libro:
         # convertimos las lineas del libro en una lista de lineas
         lineas_libro = libro.readlines()
@@ -116,7 +116,7 @@ else:
             contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
         
         #imprimir cantidad de palabras
-        print (mapa)
+        print ( '\nProceso ' + str(rank) ' :\n'+ str(mapa))
 
     # 3 - Ordenar las palabras encontradas
         # NO IMPLEMENTADO
@@ -151,7 +151,7 @@ else:
         # a - reemplaza la primera incidencia de todas sus palabras
         reemplazarPrimeraPalabra(lineas_libro)
         # escribimos los cambios
-        with open('libroModificado.txt','w') as target:
+        with open('libroModificado.txt.'+str(size),'w') as target:
             target.writelines(lineas_libro)
         # b - envia  el libro al siguiente
         next_node = int((rank+1)%size)
