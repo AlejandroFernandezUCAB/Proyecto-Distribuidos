@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -()
 
-# import time
+import time
 
 # NOTA: se debera leer el archivo de palabras y llenar ambos diccionarios. Esta data es de prueba.
 # mapa que tiene las palabras, el numero de incidencias, y las lineas en donde se encuentran
@@ -8,23 +8,36 @@
 # (deben estar en minuscula)
 mapa = {'regurgitación': [0,None], 'aurícula': [0,None], 'pericarditis': [0,None], 'insuficiencia mitral': [0,None], 'trombosis intraventricular': [0,None]}
 # diccionario que tiene las palabras y sus definiciones
-diccionario = {'regurgitación': '(regurgitacion => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago)' ,
+diccionario = {'regurgitación': '(regurgitación => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago)' ,
  'aurícula': '(aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas)', 
  'pericarditis': '(pericarditis => Inflamación del pericardio)', 
  'insuficiencia mitral': '(insuficiencia mitral => Reflujo de sangre ocasionado por la incapacidad de la válvula mitral del corazón de cerrarse firmemente)', 
  'trombosis intraventricular': '( trombosis intraventricular => complicación frecuente en el infarto agudo del miocardio de localización anterior, asociado a discinesia ventricular.)'}
 
-PATH_LIBRO = 'C:\\Users\\gian\\Documents\\Python\\word_counter\\cardiologia.txt'
+PATH_LIBRO = 'cardiologia.txt'
 
 # recibe: linea del libro y su indice respectivo
 # devuleve: un diccionario que tiene la siguiente composicion:
 def contarPalabras(linea, indice):
+    # A D V E R T E C I A
+    # ---------------------
+    # la siguiente linea es un fume
+    # tarde como media hora para resolverlo
+    # muy bonito python...
+    # pero una cagada el manejo de caracteres ;)
+    linea = linea.decode('cp1252').encode('utf-8')
+    # explicacion:
+        # para obtener el archivo txt use adobe reader para convertir el PDF
+        # al parecer el programa utiliza esa codificacion de caracteres por vainas de windows
+        # https://marketing.adobe.com/resources/help/en_US/whitepapers/multibyte/multibyte_windows1252.html
+        # https://stackoverflow.com/questions/12468179/unicodedecodeerror-utf8-codec-cant-decode-byte-0x9c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    
+    # print ('\nlinea: {}'.format(linea))
+    # time.sleep(0.8)
     # iteramos las llaves del mapa previamente creado
     for palabra in mapa.keys():
         # busca la incidencia de la palabra en toda la linea
         incidencias = linea.count(palabra,0,len(linea))
-        # print ('busco {}\nlinea: {} \nEncontre: {}'.format(palabra,linea,incidencias))
-        # time.sleep(1)
 
         if incidencias != 0:
 
@@ -41,7 +54,12 @@ def reemplazarPrimeraPalabra(lineas_libro):
         # si se encontro la palabra
         if mapa[palabra][0] != 0:
             # ir a la linea del libro y reemplazar palabra por definicion
-            lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].replace(palabra,diccionario[palabra])
+                # A D V E R T E C I A  2
+                # ---------------------
+                # este es un fume un poco mas feo
+                # basicamente pasa esto:
+                    # leo en codificacion cp1252, codifico a utf-8, reemplazo, decodifico utf-8, codifico en cp1252 para escribir 
+            lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].decode('cp1252').encode('utf-8').replace(palabra,diccionario[palabra]).decode('utf-8').encode('cp1252')
             # print ('\N-----\NVOY A REEMPLAZAR\NANTES:{}\NDESPUES:{}\N-----\N')
 
 def main():
