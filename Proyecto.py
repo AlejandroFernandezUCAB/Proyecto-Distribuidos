@@ -109,19 +109,24 @@ def main():
             # NO IMPLEMENTADO
         # 2 - Buscar palabras y contarlas (adicionalmente se guarda la posicion de la primera linea)
         lineas_libro = []
-        with open(PATH_LIBRO,'r') as libro:
-            # convertimos las lineas del libro en una lista de lineas
-            lineas_libro = libro.readlines()
 
-            print ('El libro tiene {} Lineas.\nBuscando palabras y generando mapa de incidencias...'.format( str(len(lineas_libro)) ))
+        try:
+            with open(PATH_LIBRO,'r') as libro:
+                # convertimos las lineas del libro en una lista de lineas
+                lineas_libro = libro.readlines()
 
-            for idx, linea in enumerate(lineas_libro):
-                # print(idx)
-                contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
-            
-            #imprimir cantidad de palabras
-            print ( '\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa))
+                print ('El libro tiene {} Lineas.\nBuscando palabras y generando mapa de incidencias...'.format( str(len(lineas_libro)) ))
 
+                for idx, linea in enumerate(lineas_libro):
+                    # print(idx)
+                    contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
+                
+                #imprimir cantidad de palabras
+                print ( '\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa))
+
+        except:
+            print('Hubo un error leyendo el libro')
+            exit()
         # 3 - Ordenar las palabras encontradas
             # NO IMPLEMENTADO
         # 4 - Enviar lista de palabras y sus cantidades al coordinador
@@ -139,13 +144,13 @@ def main():
             # b - reemplaza la primera incidencia de todas sus palabras
             reemplazarPrimeraPalabra(libro_modificado)
             # escribimos los cambios
-            with open('libroModificado.txt'+rank,'w') as target:
+            with open('libroModificado.txt'+str(rank),'w') as target:
                 target.writelines(libro_modificado)
 
             # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamañoAnillo )
             next_node = int((rank+1)%size)
 
-            with open('libroModificado.txt'+rank,'r') as target:
+            with open('libroModificado.txt'+str(rank),'r') as target:
                 sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
                 ' % (rank,name, next_node) )
 
@@ -156,12 +161,12 @@ def main():
             # a - reemplaza la primera incidencia de todas sus palabras
             reemplazarPrimeraPalabra(lineas_libro)
             # escribimos los cambios
-            with open('libroModificado.txt.'+str(size),'w') as target:
+            with open('libroModificado.txt.'+str(rank),'w') as target:
                 target.writelines(lineas_libro)
                 
             # b - envia  el libro al siguiente
             next_node = int((rank+1)%size)
-            with open('libroModificado.txt.'+str(size),'r') as target:
+            with open('libroModificado.txt.'+str(rank),'r') as target:
                 sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
                 ' % (rank,name, next_node) )
 
@@ -171,7 +176,7 @@ def main():
             libro_modificado = list(comm.recv(source = size-1 ,tag=77))
 
             # Linea de prueba
-            with open('libroModificado RESULTATE.txt.','w') as target:
+            with open('libroModificado RESULTATE.txt','w') as target:
                 target.writelines(libro_modificado)
 
             # d - envio libro modificado por todos los trabajadores a el coordinador
