@@ -55,9 +55,10 @@ def splitGod():
 if __name__ == "__main__":
     #Creando el archivo
     #createFile()
-    readFile()
-    readFileCantidad( input("Cantidad de caracteres a mostrar\n") )
-    readFileLine()
+    
+    #readFile()
+    #readFileCantidad( input("Cantidad de caracteres a mostrar\n") )
+    #readFileLine()
     readFileLineMore()
-    readHowObject()
-    splitGod()
+    #readHowObject()
+    #splitGod()
