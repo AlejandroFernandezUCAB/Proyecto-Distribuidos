@@ -16,11 +16,11 @@ def agregarPalabrasAOtroArray( array1 , array2 ):
     for x in array2:
         array1.append( x )
     array1.sort()
-
+    return array1
 
 #Main
 if __name__ == '__main__':
 
     archivo1 = abrirArchivo("archivo1")
     archivo2 = abrirArchivo("archivo2")
-    agregarPalabrasAOtroArray( archivo1, archivo2)
+    imprimir1 = agregarPalabrasAOtroArray( archivo1, archivo2)
