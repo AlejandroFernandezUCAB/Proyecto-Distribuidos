@@ -9,9 +9,9 @@ import random
 # ----- Variables Globales ------
 # NOTA: se debera leer el archivo de palabras y llenar ambos diccionarios. Esta data es de prueba.
 # mapa que tiene las palabras, el numero de incidencias, y las lineas en donde se encuentran
-    # mapa['<palabra>'] = [  <numero de incidencias>  ,  <numero de linea de la primera incidencia> , <lineas extras agregadas>]
+    # mapa['<palabra>'] = [  <numero de incidencias>  ,  <numero de linea de la primera incidencia> 
 # (deben estar en minuscula)
-mapa = {'regurgitación': [0,None,None], 'aurícula': [0,None,None], 'pericarditis': [0,None,None], 'insuficiencia mitral': [0,None,None], 'trombosis intraventricular': [0,None,None]}
+mapa = {'regurgitación': [0,None], 'aurícula': [0,None], 'pericarditis': [0,None], 'insuficiencia mitral': [0,None], 'trombosis intraventricular': [0,None]}
 # diccionario que tiene las palabras y sus definiciones
 diccionario = {'regurgitación': '(regurgitación => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago)' ,
  'aurícula': '(aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas)', 
@@ -51,12 +51,9 @@ def contarPalabras(linea, indice):
 
             if mapa[palabra][0] == 0: # si es la primera incidencia
                 mapa[palabra][1] = indice  # guardo la linea donde la encontre
-                mapa[palabra][2] = contarSaltosDeLinea(diccionario[palabra]) # guardo el nro de lineas extra agregadas por la definicion
+                # mapa[palabra][2] = contarSaltosDeLinea(diccionario[palabra]) # guardo el nro de lineas extra agregadas por la definicion
 
             mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
-
-def contarSaltosDeLinea(cadena):
-    return cadena.count('\n',0)
 
 # reemplaza la primera incidencia de la palabra
 def reemplazarPrimeraPalabra(lineas_libro):
@@ -90,7 +87,7 @@ def main():
     if rank == size:
         pass
         # F A S E  1
-        # 1 - Enviar libro y lista de palabras
+        # 1 -Enviar lista de palabras
             # NO IMPLEMENTADO
         # 2 - Recibir palabras ordenadas y sus cantidades, de los trabajadores.
             #     (Recibe de 2 en 2, hace merge sort y luego guarda en archivo temporal local. De 5 a 10 archivos temporales).
@@ -105,7 +102,7 @@ def main():
     # si soy el trabajador
     else:
         # F A S E  1
-        # 1 - Recibir libro y palabras
+        # 1 - Recibir las palabras
             # NO IMPLEMENTADO
         # 2 - Buscar palabras y contarlas (adicionalmente se guarda la posicion de la primera linea)
         lineas_libro = []
