@@ -18,26 +18,31 @@ def abrirArchivo( nombreArchivo ):
     archivo.close()
     return palabras
 
+#Funcion para agregar elementos de un array a otro
+#Esta funcion devuelve el array ya lleno
+def agregarElementosArray( arrayDevolver, array):
+    
+    for x in array:
+        if "\n" not in x: 
+            x = x + "\n"
+            arrayDevolver.append( x )
+        else:
+            arrayDevolver.append( x )
+    
+    return arrayDevolver
+
 #Con esta funcion se va a agarrar el array2 y se agregara a la cola
 #Del array1, quedando array1 + arra2 (No es una suma)
 #Luego procede a ordenarlo y lo retorno
 def agregarPalabrasAOtroArray( array1 , array2 ):
-    arrayDevolver = []
-    #Agarra el array de segundo lugar y mete elemento por elemento en el array1
-    for x in array1:
-        if "\n" not in x: 
-            x = x + "\n"
-            arrayDevolver.append( x )
-        else:
-            arrayDevolver.append( x )
 
-    for x in array2:
-        if "\n" not in x: 
-            x = x + "\n"
-            arrayDevolver.append( x )
-        else:
-            arrayDevolver.append( x )
-        
+    #Inicializando el array donde que se devolvera
+    arrayDevolver = []
+    #Agarra el arrayDevolver que esta vacio y lo llena con array1
+    arrayDevolver = agregarElementosArray( arrayDevolver , array1 )
+    #Agarra el arrayDevolver que esta vacio y lo llena con array2
+    arrayDevolver = agregarElementosArray( arrayDevolver , array2 )
+    #Ordena el array alfabeticamente
     arrayDevolver.sort()
     return arrayDevolver
 
