@@ -20,7 +20,7 @@ diccionario = {'regurgitación': '(regurgitación => Expulsar por la boca,sin v�
  'trombosis intraventricular': '( trombosis intraventricular => complicación frecuente en el infarto agudo del miocardio de localización anterior, asociado a discinesia ventricular.)'}
 
 PATH_LIBRO = 'libro_medicina.txt'
-PATH_DICCIONARIO = 'diccionario_medicina.txt'
+PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
 
 # ----- /Variables Globales ------
 
