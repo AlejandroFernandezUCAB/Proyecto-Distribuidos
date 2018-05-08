@@ -19,7 +19,9 @@ diccionario = {'regurgitación': '(regurgitación => Expulsar por la boca,sin v�
  'insuficiencia mitral': '(insuficiencia mitral => Reflujo de sangre ocasionado por la incapacidad de la válvula mitral del corazón de cerrarse firmemente)', 
  'trombosis intraventricular': '( trombosis intraventricular => complicación frecuente en el infarto agudo del miocardio de localización anterior, asociado a discinesia ventricular.)'}
 
-PATH_LIBRO = 'cardiologia.txt'
+PATH_LIBRO = 'libro_medicina.txt'
+PATH_DICCIONARIO = 'diccionario_medicina.txt'
+
 # ----- /Variables Globales ------
 
 # ----- Funciones Para Leer, Contar y Modificar ------
