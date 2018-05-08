@@ -4,7 +4,7 @@ mapa = {}
 diccionario = {}
 
 PATH_LIBRO = 'libro_medicina.txt'
-PATH_DICCIONARIO = '../palabras_libro_medicina.txt'
+PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
 
 # ----- /Variables Globales ------
 
