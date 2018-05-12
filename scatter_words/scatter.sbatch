@@ -21,7 +21,7 @@ function runScript {
         # inicializamos el ambiente
         initialize
         echo -e "\n\n---------- Ejecucion de Script de Python -------------"
-        time prun python Scatter.py 2> error
+        time prun python scatterMpi.py 2> error
         echo -e "\n----------=====================-------------\n\n"
 }
 
