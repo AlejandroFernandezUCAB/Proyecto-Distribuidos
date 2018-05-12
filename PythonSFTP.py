@@ -37,7 +37,7 @@ def obtenerCredenciales():
 def conexionSftp(credenciales):
 
     return pysftp.Connection(
-        BEEHIVE_PUB,
+        BEEHIVE,
         username=str(credenciales[0]), 
         private_key=str(credenciales[1]), 
         private_key_pass=str(credenciales[2]) 
@@ -60,7 +60,8 @@ if __name__ == '__main__':
 
     with conexion.cd(CARPETA_COMPARTIDA):
         #Aqui hay que colocar el archivo a subir
-        conexion.put('HolaMundoFTP')
+        conexion.put('Scatter.py')
+        conexion.put('Scatter.sbatch')
         for attr in conexion.listdir_attr():
             print attr.filename, attr
 
