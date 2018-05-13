@@ -5,7 +5,7 @@ mapa = {}
 diccionario = {}
 
 PATH_LIBRO = 'libro_medicina.txt'
-PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
+PATH_DICCIONARIO = 'palabras.txt'
 
 # ----- /Variables Globales ------
 
@@ -60,15 +60,20 @@ def main():
         for i in range(nodos):
 	    if i == 0:
                 workload.append(None)
-            workload.append(palabras[chunksize*i:chunksize*(1+i):])
-
+	    if i != nodos-1:
+                workload.append(palabras[chunksize*i:chunksize*(1+i):])
+	    else:
+                workload.append(palabras[chunksize*i::])
         #print workload
 
     else:
         workload = None
 
     workload = comm.scatter(workload, root=0)
-    print 'rank',rank,'has workload:',workload
+    print '\n- - >  rank',rank,'has workload:',workload,  'Length: '
+    if workload != None:
+       print len(workload)
+    print '\n'
 
 if __name__ == '__main__':
     main()
