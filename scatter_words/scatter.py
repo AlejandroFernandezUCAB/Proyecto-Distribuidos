@@ -1,3 +1,4 @@
+import math
 # -*- coding: utf-8 -()
 mapa = {}
 # diccionario que tiene las palabras y sus definiciones
@@ -33,10 +34,28 @@ def limpiarString(linea):
 #     return s
 
 def main():
+    # CARGAR LISTA DE PALABRAS EN MEMORIA
     cargarDiccionario()
-    print((mapa))
-    print ""
-    print((diccionario))
+    # print((mapa))
+    # print ""
+    # print((diccionario))
+    #
+    
+    #SCATTER A LOS NODOS
+    # picamos el arreglo
+    palabras = diccionario.keys()
+    print "Numero de palabras: {}".format(len(palabras))
+    
+    nodos = 4 # = rank
+
+    chunksize = int(math.ceil(len(palabras)/float(nodos)))
+
+    workload = []
+
+    for i in range(nodos):
+        workload.append(palabras[chunksize*i:chunksize*(1+i):])
+
+    print workload
 
 if __name__ == '__main__':
     main()
