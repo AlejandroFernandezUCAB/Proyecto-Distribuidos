@@ -9,7 +9,9 @@ if rank == 0:
    print 'we will be scattering:',data
 else:
    data = None
-   
+
+if rank == 0:
+    
 data = comm.scatter(data, root=0)
 data += 1
 print 'rank',rank,'has data:',data

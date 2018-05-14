@@ -2,7 +2,7 @@ import pysftp
 
 BEEHIVE = '192.168.25.100'
 BEEHIVE_PUB = '200.2.13.226'
-CARPETA_COMPARTIDA = '/home/group/distribuidos/201825_25789/13'
+CARPETA_COMPARTIDA = '/home/group/distribuidos/201825_25789/13/programasMPI/ScatterManual'
 
 # lee las credenciales del archivo de configuracion.
 # Si no lo encuentra las crea...
@@ -60,8 +60,8 @@ if __name__ == '__main__':
 
     with conexion.cd(CARPETA_COMPARTIDA):
         #Aqui hay que colocar el archivo a subir
-        conexion.put('Scatter.py')
-        conexion.put('Scatter.sbatch')
+        conexion.put('Documentos Cluster/programasMPI/scatterManual/scatterManual.py')
+        conexion.put('Documentos Cluster/programasMPI/scatterManual/scatterManual.sbatch')
         for attr in conexion.listdir_attr():
             print attr.filename, attr
 
