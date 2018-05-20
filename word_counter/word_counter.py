@@ -60,7 +60,7 @@ def reemplazarPrimeraPalabra(lineas_libro):
                 # basicamente pasa esto:
                     # leo en codificacion cp1252, codifico a utf-8, reemplazo, decodifico utf-8, codifico en cp1252 para escribir 
             # Linea para version anterior del libro ----> lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].decode('cp1252').encode('utf-8').replace(palabra,diccionario[palabra]).decode('utf-8').encode('cp1252')
- 	    lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].replace(palabra,diccionario[palabra])
+ 	    lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].lower().replace(palabra,diccionario[palabra])
 
             # print ('\N-----\NVOY A REEMPLAZAR\NANTES:{}\NDESPUES:{}\N-----\N')
 
