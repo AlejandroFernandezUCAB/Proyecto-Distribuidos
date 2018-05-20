@@ -4,9 +4,9 @@ import time
 
 # NOTA: se debera leer el archivo de palabras y llenar ambos diccionarios. Esta data es de prueba.
 # mapa que tiene las palabras, el numero de incidencias, y las lineas en donde se encuentran
-    # mapa['<palabra>'] = [  <numero de incidencias>  ,  <numero de linea de la primera incidencia> , <lineas extras agregadas>]
+    # mapa['<palabra>'] = [  <numero de incidencias>  ,  <numero de linea de la primera incidencia>]
 # (deben estar en minuscula)
-mapa = {'regurgitación': [0,None,None], 'aurícula': [0,None,None], 'pericarditis': [0,None,None], 'insuficiencia mitral': [0,None,None], 'trombosis intraventricular': [0,None,None]}
+mapa = {'regurgitación': [0,None], 'aurícula': [0,None], 'pericarditis': [0,None], 'insuficiencia mitral': [0,None], 'trombosis intraventricular': [0,None]}
 # diccionario que tiene las palabras y sus definiciones
 diccionario = {'regurgitación': '(regurgitación => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago)' ,
  'aurícula': '(aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas)', 
@@ -14,7 +14,7 @@ diccionario = {'regurgitación': '(regurgitación => Expulsar por la boca,sin v�
  'insuficiencia mitral': '(insuficiencia mitral => Reflujo de sangre ocasionado por la incapacidad de la válvula mitral del corazón de cerrarse firmemente)', 
  'trombosis intraventricular': '( trombosis intraventricular => complicación frecuente en el infarto agudo del miocardio de localización anterior, asociado a discinesia ventricular.)'}
 
-PATH_LIBRO = 'cardiologia.txt'
+PATH_LIBRO = 'libro_medicina.txt'
 
 # recibe: linea del libro y su indice respectivo
 # devuleve: un diccionario que tiene la siguiente composicion:
@@ -25,7 +25,7 @@ def contarPalabras(linea, indice):
     # tarde como media hora para resolverlo
     # muy bonito python...
     # pero una cagada el manejo de caracteres ;)
-    linea = linea.decode('cp1252').encode('utf-8')
+    #	Linea para version aterir de libr ---> linea = linea.decode('cp1252').encode('utf-8')
     # explicacion:
         # para obtener el archivo txt use adobe reader para convertir el PDF
         # al parecer el programa utiliza esa codificacion de caracteres por vainas de windows
@@ -43,12 +43,9 @@ def contarPalabras(linea, indice):
 
             if mapa[palabra][0] == 0: # si es la primera incidencia
                 mapa[palabra][1] = indice  # guardo la linea donde la encontre
-                mapa[palabra][2] = contarSaltosDeLinea(diccionario[palabra]) # guardo el nro de lineas extra agregadas por la definicion
 
             mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
 
-def contarSaltosDeLinea(cadena):
-    return cadena.count('\n',0)
 
 # reemplaza la primera incidencia de la palabra
 def reemplazarPrimeraPalabra(lineas_libro):
@@ -62,7 +59,9 @@ def reemplazarPrimeraPalabra(lineas_libro):
                 # este es un fume un poco mas feo
                 # basicamente pasa esto:
                     # leo en codificacion cp1252, codifico a utf-8, reemplazo, decodifico utf-8, codifico en cp1252 para escribir 
-            lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].decode('cp1252').encode('utf-8').replace(palabra,diccionario[palabra]).decode('utf-8').encode('cp1252')
+            # Linea para version anterior del libro ----> lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].decode('cp1252').encode('utf-8').replace(palabra,diccionario[palabra]).decode('utf-8').encode('cp1252')
+ 	    lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].replace(palabra,diccionario[palabra])
+
             # print ('\N-----\NVOY A REEMPLAZAR\NANTES:{}\NDESPUES:{}\N-----\N')
 
 def main():
