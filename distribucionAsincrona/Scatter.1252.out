@@ -1,0 +1,92 @@
+----------Preparando el entorno-------------
+	Modulos cargados...
+----------=====================-------------
+
+
+
+---------- Ejecucion de Script de Python -------------
+[prun] Master compute host = beehive-node1
+[prun] Resource manager = slurm
+[prun] Launch cmd = mpirun python distribucionAsincrona.py (family=openmpi3)
+Numero de palabras: 1014
+palabras por nodo: 42
+Nodo Coordinador envia palabras, de manera asincona
+coordinador --> voy a enviar:  42  a proceso  0 . ( 0 , 42 )
+coordinador --> voy a enviar:  42  a proceso  1 . ( 42 , 84 )
+coordinador --> voy a enviar:  42  a proceso  2 . ( 84 , 126 )
+coordinador --> voy a enviar:  42  a proceso  3 . ( 126 , 168 )
+coordinador --> voy a enviar:  42  a proceso  4 . ( 168 , 210 )
+coordinador --> voy a enviar:  42  a proceso  5 . ( 210 , 252 )
+coordinador --> voy a enviar:  42  a proceso  6 . ( 252 , 294 )
+coordinador --> voy a enviar:  42  a proceso  7 . ( 294 , 336 )
+coordinador --> voy a enviar:  42  a proceso  8 . ( 336 , 378 )
+coordinador --> voy a enviar:  42  a proceso  9 . ( 378 , 420 )
+coordinador --> voy a enviar:  42  a proceso  10 . ( 420 , 462 )
+coordinador --> voy a enviar:  42  a proceso  11 . ( 462 , 504 )
+coordinador --> voy a enviar:  42  a proceso  12 . ( 504 , 546 )
+coordinador --> voy a enviar:  42  a proceso  13 . ( 546 , 588 )
+coordinador --> voy a enviar:  42  a proceso  14 . ( 588 , 630 )
+coordinador --> voy a enviar:  42  a proceso  15 . ( 630 , 672 )
+coordinador --> voy a enviar:  42  a proceso  16 . ( 672 , 714 )
+coordinador --> voy a enviar:  42  a proceso  17 . ( 714 , 756 )
+coordinador --> voy a enviar:  42  a proceso  18 . ( 756 , 798 )
+coordinador --> voy a enviar:  42  a proceso  19 . ( 798 , 840 )
+coordinador --> voy a enviar:  42  a proceso  20 . ( 840 , 882 )
+coordinador --> voy a enviar:  42  a proceso  21 . ( 882 , 924 )
+Nodo 22  --> recibi:  90
+coordinador termino envio asincrono
+Nodo coordinador espera respuesta de manera asincrona
+Nodo 1  --> recibi:  42
+Nodo 12  --> recibi:  42
+Nodo 16  --> recibi:  42
+Nodo 14  --> recibi:  42
+Nodo 18  --> recibi:  42
+Nodo 21  --> recibi:  42
+Nodo 13  --> recibi:  42
+Nodo 6  --> recibi:  42
+Nodo 17  --> recibi:  42
+Nodo 10  --> recibi:  42
+Nodo 8  --> recibi:  42
+Nodo 15  --> recibi:  42
+Nodo 2  --> recibi:  42
+Nodo 19  --> recibi:  42
+Nodo 20  --> recibi:  42
+Nodo 7  --> recibi:  42
+Nodo 11  --> recibi:  42
+Nodo 9  --> recibi:  42
+Nodo 4  --> recibi:  42
+Nodo 3  --> recibi:  42
+Nodo 5  --> recibi:  42
+Nodo 0  --> recibi:  42
+coordinador -> recibi:  Exito! . De nodo:  2
+coordinador -> recibi:  Exito! . De nodo:  3
+coordinador -> recibi:  Exito! . De nodo:  4
+coordinador -> recibi:  Exito! . De nodo:  5
+coordinador -> recibi:  Exito! . De nodo:  6
+coordinador -> recibi:  Exito! . De nodo:  7
+coordinador -> recibi:  Exito! . De nodo:  8
+coordinador -> recibi:  Exito! . De nodo:  9
+coordinador -> recibi:  Exito! . De nodo:  10
+coordinador -> recibi:  Exito! . De nodo:  11
+coordinador -> recibi:  Exito! . De nodo:  12
+coordinador -> recibi:  Exito! . De nodo:  13
+coordinador -> recibi:  Exito! . De nodo:  14
+coordinador -> recibi:  Exito! . De nodo:  15
+coordinador -> recibi:  Exito! . De nodo:  16
+coordinador -> recibi:  Exito! . De nodo:  17
+coordinador -> recibi:  Exito! . De nodo:  18
+coordinador -> recibi:  Exito! . De nodo:  19
+coordinador -> recibi:  Exito! . De nodo:  20
+coordinador -> recibi:  Exito! . De nodo:  21
+coordinador -> recibi:  Exito! . De nodo:  22
+coordinador -> recibi:  Exito! . De nodo:  0
+coordinador -> recibi:  Exito! . De nodo:  1
+coordinador -> sali del ciclo
+
+real	0m4.468s
+user	0m0.527s
+sys	0m0.520s
+
+----------=====================-------------
+
+

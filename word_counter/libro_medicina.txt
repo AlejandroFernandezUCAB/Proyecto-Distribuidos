@@ -10640,7 +10640,7 @@ pacientes sometidos a una arteriografía coronaria por dolor torácico son norma
 y un 50% de ellos presenta patología esofágica. Entre estas se mencionan la
 acalasia, la esofagitis por reﬂujo y la hernia hiatal; otras menos frecuentes son el
 espasmo esofágico difuso, el esófago en cascanueces, la hipomotilidad esofágica
-o parálisis completa con disfagia, (regurgitación => Expulsar por la boca,sin vómito,sustancias sólidas o líquidas contenidas en el estómago o en el esófago) y esofagitis de la esclerosis
+o parálisis completa con disfagia, regurgitación y esofagitis de la esclerosis
 sistémica, la hipertensión del esfínter esofágico inferior, y el megaesófago de
 la enfermedad de Chagas, muy raro en nuestro medio. La evaluación de estos
 pacientes debe ser hecha a través de estudios radiológicos con medio de contraste,
@@ -57186,7 +57186,7 @@ valvular mitral.
 1562  INSUFICIENCIA CARDIACA CRÓNICA
 
     Con la terapia de resincronización cardíaca (TRC) se intentan compensar estas
-alteraciones mediante la estimulación con electrodos en la (aurícula => Cada una de las dos cavidades superiores del corazón de los anfibios, reptiles, aves y mamíferos, situadas sobre los ventrículos, que reciben la sangre de las venas) derecha, ventrí-
+alteraciones mediante la estimulación con electrodos en la aurícula derecha, ventrí-
 culo derecho y pared lateral del VI. Esto permite la programación de un adecuado
 intervalo auriculoventricular y la estimulación biventricular, la cual mejora la función
 contráctil, disminuye la regurgitación mitral secundaria y el remodelado ventricular,
