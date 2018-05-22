@@ -14,6 +14,36 @@ PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
 # ----- /Variables Globales ------
 
 # ----- Funciones Para Leer, Contar y Modificar ------
+# recibe: linea del libro y su indice respectivo
+# devuleve: un diccionario que tiene la siguiente composicion:
+def contarPalabras(linea, indice):
+    # A D V E R T E C I A
+    # ---------------------
+    # la siguiente linea es un fume
+    # tarde como media hora para resolverlo
+    # muy bonito python...
+    # pero una cagada el manejo de caracteres ;)
+    #	Linea para version aterir de libr ---> linea = linea.decode('cp1252').encode('utf-8')
+    # explicacion:
+        # para obtener el archivo txt use adobe reader para convertir el PDF
+        # al parecer el programa utiliza esa codificacion de caracteres por vainas de windows
+        # https://marketing.adobe.com/resources/help/en_US/whitepapers/multibyte/multibyte_windows1252.html
+        # https://stackoverflow.com/questions/12468179/unicodedecodeerror-utf8-codec-cant-decode-byte-0x9c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    
+    # print ('\nlinea: {}'.format(linea))
+    # time.sleep(0.8)
+    # iteramos las llaves del mapa previamente creado
+    for palabra in mapa.keys():
+        # busca la incidencia de la palabra en toda la linea
+        incidencias = linea.count(palabra,0,len(linea))
+
+        if incidencias != 0:
+
+            if mapa[palabra][0] == 0: # si es la primera incidencia
+                mapa[palabra][1] = indice  # guardo la linea donde la encontre
+
+            mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
+
 
 # lee el archivo PATH_DICCIONARIO
 def cargarDiccionario():
@@ -123,12 +153,10 @@ def main():
         print "Nodo",rank," --> recibi: ",len(data)
         # time.sleep(random.randint(1,(rank//3)+2))
         comm.send('Exito!', dest=size-1, tag=100)
-        diccionario = dict(data) 
+        diccionarioE = data 
         # inicializarMapa()
-        print type(data)
-
         lineas_libro = []
-        '''
+        
         try:
             with open(PATH_LIBRO,'r') as libro:
                 # convertimos las lineas del libro en una lista de lineas
@@ -138,14 +166,13 @@ def main():
                 for idx, linea in enumerate(lineas_libro):
                     # print(idx)
                     contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
-
                 #imprimir cantidad de palabras
                 print ( '\n\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa)+"\n\n")
 
         except:
             print('Hubo un error leyendo el libro: {}'.format(sys.exc_info()[0]))
             exit()
-        '''
+        
 
 if __name__ == '__main__':
     main()
