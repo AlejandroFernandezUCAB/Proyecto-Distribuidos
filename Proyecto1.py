@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import time
 import random
+import sys
 
 # -*- coding: utf-8 -()
 mapa = {}
@@ -54,30 +55,40 @@ def main():
         
         #SCATTER A LOS NODOS
         # picamos el arreglo
-        palabras = diccionario.keys()
-        print "Numero de palabras: {}".format(len(palabras))
         
+        
+
+
+        palabras = len(diccionario)
+        print "Numero de palabras: {}".format(palabras)
+        
+        
+
+
         # nodos = size 
 
-        chunksize = int(round(len(palabras)/float(size)))
+        chunksize = int(round(palabras/float(size)))
         print "palabras por nodo: {}".format(chunksize)
         # workload = []
         messagesSent = []
         print "Nodo Coordinador envia palabras, de manera asincona"
         for i in range(size-1):
             # Envio a todos los Trabajadores
-	        if i < size-2:
-	            temp = palabras[chunksize*i:chunksize*(1+i):]
+            if i < size-2:
+                temp = {element:diccionario[element] for idx,element in enumerate(diccionario) if (idx)>=chunksize*i and (idx)<chunksize*(1+i)}
+                #temp = palabras[chunksize*i:chunksize*(1+i):]
+                
                 print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
                 # ENVIO SINCRONO F U N C I O N A
                 messagesSent.append(comm.isend(temp,dest=i,tag=99))
                 # Envio a ultimo trabajador
             elif i == size-2:
-                temp = palabras[chunksize*i::]
+                # temp = palabras[chunksize*i::]
+                temp = {element:diccionario[element] for idx,element in enumerate(diccionario) if (idx)>=chunksize*i and (idx)<=len(diccionario)}
                 print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
-		        messagesSent.append(comm.send(temp,dest=i, tag=99))
-	            #comm.send("hola soy tu padre", dest=i, tag=99)
-		        # print "enviando asincrono a ",i
+	        messagesSent.append(comm.send(temp,dest=i, tag=99))
+                #comm.send("hola soy tu padre", dest=i, tag=99)
+	        # print "enviando asincrono a ",i
 	
         print "coordinador termino envio asincrono"
 	
@@ -98,7 +109,7 @@ def main():
                 time.sleep(0.2)
 	        # print "espero a ",nodo
             else:
-            temp = iMensajes[nodo].wait()
+                temp = iMensajes[nodo].wait()
                 if temp != None:
                     print "coordinador -> recibi: ",temp,". De nodo: ",nodo
                     contador += 1
@@ -107,21 +118,17 @@ def main():
 	
     # si eres trabajador
     else:
-        diccionario = comm.recv(source=size-1, tag=99)
-        print "Diccionario posee esto:" + str(diccionario)
-	    # req = comm.irecv(source=size-1, tag=99)
-    	# data = req.wait()
+        data = dict(comm.recv(source=size-1, tag=99))
         
-        print "Nodo",rank," --> recibi: ",len(diccionario)
+        print "Nodo",rank," --> recibi: ",len(data)
         # time.sleep(random.randint(1,(rank//3)+2))
         comm.send('Exito!', dest=size-1, tag=100)
+        diccionario = dict(data) 
+        # inicializarMapa()
+        print type(data)
 
-        # F A S E  1
-        # 1 - Recibir las palabras
-        # NO IMPLEMENTADO
-        # 2 - Buscar palabras y contarlas (adicionalmente se guarda la posicion de la primera linea)
         lineas_libro = []
-
+        '''
         try:
             with open(PATH_LIBRO,'r') as libro:
                 # convertimos las lineas del libro en una lista de lineas
@@ -133,12 +140,12 @@ def main():
                     contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
 
                 #imprimir cantidad de palabras
-                print ( '\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa))
+                print ( '\n\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa)+"\n\n")
 
         except:
-            print('Hubo un error leyendo el libro')
+            print('Hubo un error leyendo el libro: {}'.format(sys.exc_info()[0]))
             exit()
-
+        '''
 
 if __name__ == '__main__':
     main()
