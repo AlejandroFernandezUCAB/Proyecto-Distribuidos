@@ -130,13 +130,37 @@ def main():
 	
     # si eres trabajador
     else:
-        data = comm.recv(source=size-1, tag=99)
-	# req = comm.irecv(source=size-1, tag=99)
+        diccionario = comm.recv(source=size-1, tag=99)
+	    # req = comm.irecv(source=size-1, tag=99)
     	# data = req.wait()
         
-	print "Nodo",rank," --> recibi: ",len(data)
+        print "Nodo",rank," --> recibi: ",len(diccionario)
         # time.sleep(random.randint(1,(rank//3)+2))
         comm.send('Exito!', dest=size-1, tag=100)
+
+        # F A S E  1
+        # 1 - Recibir las palabras
+        # NO IMPLEMENTADO
+        # 2 - Buscar palabras y contarlas (adicionalmente se guarda la posicion de la primera linea)
+        lineas_libro = []
+
+        try:
+            with open(PATH_LIBRO,'r') as libro:
+                # convertimos las lineas del libro en una lista de lineas
+                lineas_libro = libro.readlines()
+                print ('El libro tiene {} Lineas.\nBuscando palabras y generando mapa de incidencias...'.format( str(len(lineas_libro)) ))
+
+                for idx, linea in enumerate(lineas_libro):
+                    # print(idx)
+                    contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
+
+                #imprimir cantidad de palabras
+                print ( '\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa))
+
+        except:
+            print('Hubo un error leyendo el libro')
+            exit()
+
 
 if __name__ == '__main__':
     main()
