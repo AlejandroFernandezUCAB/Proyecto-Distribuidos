@@ -66,15 +66,10 @@ def main():
         print "Nodo Coordinador envia palabras, de manera asincona"
         for i in range(size-1):
             # Envio a todos los Trabajadores
-	    if i < size-2:
-	        temp = palabras[chunksize*i:chunksize*(1+i):]
+	        if i < size-2:
+	            temp = palabras[chunksize*i:chunksize*(1+i):]
 		
-
-
-
-
-
-		print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
+        print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
 		
 		# ENVIO SINCRONO F U N C I O N A
 		
@@ -102,7 +97,7 @@ def main():
 		# comm.send("hola soy tu padre", dest=i, tag=99)
 		# print "enviando asincrono a ",i
 	
-	print "coordinador termino envio asincrono"
+	    print "coordinador termino envio asincrono"
 	
 	
         iMensajes = []
