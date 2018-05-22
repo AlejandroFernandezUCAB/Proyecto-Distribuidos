@@ -22,7 +22,7 @@ def inicializarMapa( diccionarioE ):
 
     for palabra in diccionarioE.keys():
         mapa[palabra] = [0, None]
-    print "Hola, soy el MAPA=" + str(mapa)
+    #print "Hola, soy el MAPA=" + str(mapa)
 
 # recibe: linea del libro y su indice respectivo
 # devuleve: un diccionario que tiene la siguiente composicion:
@@ -178,7 +178,7 @@ def main():
                     contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
                 #imprimir cantidad de palabras
                 print ( '\n\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa)+"\n\n")
-
+                
         except:
             print('Hubo un error leyendo el libro: {}'.format(sys.exc_info()[0]))
             exit()
