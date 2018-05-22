@@ -14,6 +14,16 @@ PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
 # ----- /Variables Globales ------
 
 # ----- Funciones Para Leer, Contar y Modificar ------
+
+#Funcion para pasar las palabras del diccionario al mapa
+
+# recibe el diccionario que posee el esclavo
+def inicializarMapa( diccionarioE ):
+
+    for palabra in diccionarioE.keys():
+        mapa[palabra] = [0, None]
+    print "Hola, soy el MAPA=" + str(mapa)
+
 # recibe: linea del libro y su indice respectivo
 # devuleve: un diccionario que tiene la siguiente composicion:
 def contarPalabras(linea, indice):
@@ -154,7 +164,7 @@ def main():
         # time.sleep(random.randint(1,(rank//3)+2))
         comm.send('Exito!', dest=size-1, tag=100)
         diccionarioE = data 
-        # inicializarMapa()
+        inicializarMapa( diccionarioE )
         lineas_libro = []
         
         try:
