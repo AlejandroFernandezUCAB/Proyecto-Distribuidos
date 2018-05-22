@@ -69,31 +69,18 @@ def main():
 	        if i < size-2:
 	            temp = palabras[chunksize*i:chunksize*(1+i):]
 		
-        print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
+                print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
 		
-		# ENVIO SINCRONO F U N C I O N A
+		        # ENVIO SINCRONO F U N C I O N A
 		
-		messagesSent.append(comm.isend(temp,dest=i,tag=99))
-		# comm.send("Soy tu padre!",dest=i,tag=99)
-
-		# time.sleep(0.2)
-
-		# comm.isend('hola soy tu padre',dest=i, tag=99)
-		# print "enviando asincrono a ",i
+		        messagesSent.append(comm.isend(temp,dest=i,tag=99))
             # Envio a ultimo trabajador
-	    elif i == size-2:
-	        temp = palabras[chunksize*i::]
-		
-
-
-
-
-		# print "coordinador --> voy a enviar: ",temp," a proceso ",i
-
-
+	        elif i == size-2:
+	            temp = palabras[chunksize*i::]
+        		# print "coordinador --> voy a enviar: ",temp," a proceso ",i
                 # ENVIO SINCRONO F U N C I O N A
-		print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
-		messagesSent.append(comm.send(temp,dest=i, tag=99))
+		        print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
+		        messagesSent.append(comm.send(temp,dest=i, tag=99))
 		# comm.send("hola soy tu padre", dest=i, tag=99)
 		# print "enviando asincrono a ",i
 	
@@ -116,11 +103,11 @@ def main():
                 time.sleep(0.2)
 	        # print "espero a ",nodo
             else:
-		temp = iMensajes[nodo].wait()
-		if temp != None:
-                    print "coordinador -> recibi: ",temp,". De nodo: ",nodo
-		    contador += 1
-	    nodo = (nodo+1)%size
+		    temp = iMensajes[nodo].wait()
+		    if temp != None:
+                print "coordinador -> recibi: ",temp,". De nodo: ",nodo
+		        contador += 1
+	        nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
 	
     # si eres trabajador
