@@ -14,8 +14,15 @@ PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
 # ----- /Variables Globales ------
 
 # ----- Funciones Para Leer, Contar y Modificar ------
+def reemplazarPrimeraPalabra(lineas_libro):
 
-#Funcion para pasar las palabras del diccionario al mapa
+    # recorremos el mapa
+    for palabra in mapa.keys():
+        # si se encontro la palabra
+        if mapa[palabra][0] != 0:
+            lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].lower().replace(palabra,diccionario[palabra])
+
+
 
 # recibe el diccionario que posee el esclavo
 def inicializarMapa( diccionarioE ):
@@ -27,25 +34,9 @@ def inicializarMapa( diccionarioE ):
 # recibe: linea del libro y su indice respectivo
 # devuleve: un diccionario que tiene la siguiente composicion:
 def contarPalabras(linea, indice):
-    # A D V E R T E C I A
-    # ---------------------
-    # la siguiente linea es un fume
-    # tarde como media hora para resolverlo
-    # muy bonito python...
-    # pero una cagada el manejo de caracteres ;)
-    #	Linea para version aterir de libr ---> linea = linea.decode('cp1252').encode('utf-8')
-    # explicacion:
-        # para obtener el archivo txt use adobe reader para convertir el PDF
-        # al parecer el programa utiliza esa codificacion de caracteres por vainas de windows
-        # https://marketing.adobe.com/resources/help/en_US/whitepapers/multibyte/multibyte_windows1252.html
-        # https://stackoverflow.com/questions/12468179/unicodedecodeerror-utf8-codec-cant-decode-byte-0x9c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-    
-    # print ('\nlinea: {}'.format(linea))
-    # time.sleep(0.8)
-    # iteramos las llaves del mapa previamente creado
     for palabra in mapa.keys():
         # busca la incidencia de la palabra en toda la linea
-        incidencias = linea.count(palabra,0,len(linea))
+        incidencias = linea.count(palabra,0,len(" "+linea+" "))
 
         if incidencias != 0:
 
@@ -73,37 +64,18 @@ def cargarDiccionario():
 def limpiarString(linea):
     return linea.replace("\n","").replace('"',"")
 
-# source: https://stackoverflow.com/questions/761804/how-do-i-trim-whitespace-from-a-python-string
-# def strip_one_space(s):
-#     if s.endswith(" "): s = s[:-1]
-#     if s.startswith(" "): s = s[1:]
-#     return s
-
 def main():
     comm = MPI.COMM_WORLD
     size = comm.Get_size()
     rank = comm.Get_rank()
+    name = MPI.Get_processor_name()
 
     # si eres el coordinador
     if rank == size-1:
         # CARGAR LISTA DE PALABRAS EN MEMORIA
         cargarDiccionario()
-        # print((mapa))
-        # print ""
-        # print((diccionario))
-        #
-        
-        #SCATTER A LOS NODOS
-        # picamos el arreglo
-        
-        
-
-
         palabras = len(diccionario)
         print "Numero de palabras: {}".format(palabras)
-        
-        
-
 
         # nodos = size 
 
@@ -111,22 +83,22 @@ def main():
         print "palabras por nodo: {}".format(chunksize)
         # workload = []
         messagesSent = []
-        print "Nodo Coordinador envia palabras, de manera asincona"
+        print "Proceso Coordinador envia palabras, de manera asincona"
         for i in range(size-1):
             # Envio a todos los Trabajadores
             if i < size-2:
                 temp = {element:diccionario[element] for idx,element in enumerate(diccionario) if (idx)>=chunksize*i and (idx)<chunksize*(1+i)}
                 #temp = palabras[chunksize*i:chunksize*(1+i):]
                 
-                print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
+                print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",(chunksize*(1+i))-1,")"
                 # ENVIO SINCRONO F U N C I O N A
                 messagesSent.append(comm.isend(temp,dest=i,tag=99))
                 # Envio a ultimo trabajador
             elif i == size-2:
                 # temp = palabras[chunksize*i::]
                 temp = {element:diccionario[element] for idx,element in enumerate(diccionario) if (idx)>=chunksize*i and (idx)<=len(diccionario)}
-                print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",chunksize*(1+i),")"
-	        messagesSent.append(comm.send(temp,dest=i, tag=99))
+                print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",(chunksize*(1+i))-1,")"
+                messagesSent.append(comm.send(temp,dest=i, tag=99))
                 #comm.send("hola soy tu padre", dest=i, tag=99)
 	        # print "enviando asincrono a ",i
 	
@@ -146,12 +118,13 @@ def main():
             if contador == size-1:
                 break
             if not iMensajes[nodo].Get_status():
-                time.sleep(0.2)
+                time.sleep(0.1)
 	        # print "espero a ",nodo
+                pass
             else:
                 temp = iMensajes[nodo].wait()
                 if temp != None:
-                    print "coordinador -> recibi: ",temp,". De nodo: ",nodo
+                    print "coordinador -> recibi: ",temp,". De Proceso: ",nodo
                     contador += 1
 	        nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
@@ -160,9 +133,10 @@ def main():
     else:
         data = dict(comm.recv(source=size-1, tag=99))
         
-        print "Nodo",rank," --> recibi: ",len(data)
+        print "Proceso",rank," --> recibi: ",len(data)
+        
         # time.sleep(random.randint(1,(rank//3)+2))
-        comm.send('Exito!', dest=size-1, tag=100)
+        
         diccionarioE = data 
         inicializarMapa( diccionarioE )
         lineas_libro = []
@@ -171,7 +145,7 @@ def main():
             with open(PATH_LIBRO,'r') as libro:
                 # convertimos las lineas del libro en una lista de lineas
                 lineas_libro = libro.readlines()
-                print ('El libro tiene {} Lineas.\nBuscando palabras y generando mapa de incidencias...'.format( str(len(lineas_libro)) ))
+                print ('Proceso {} ---> Buscando palabras y generando mapa de incidencias...'.format( str(rank) ))
 
                 for idx, linea in enumerate(lineas_libro):
                     # print(idx)
@@ -183,6 +157,65 @@ def main():
             print('Hubo un error leyendo el libro: {}'.format(sys.exc_info()[0]))
             exit()
         
+        comm.send('Exito!', dest=size-1, tag=100)
+        
+        # - - - - - - - - - - - Codigo No Probado - - - - - - - - - - - - - - 
+
+        # F A S E  2
+        # 1 - si el rango del trabajador es diferente a 0 (x != 0)
+        if rank != 0:
+            # a - recibe el libro del anterior (Nx-1  -->  Nx)
+            # data = comm.recv(source=MPI.ANY_SOURCE, tag=77)
+            prev_node = int((rank+size-1)%size)
+            libro_modificado = list(comm.recv(source=prev_node,tag=77))
+            sys.stdout.write('Proceso %s en %s...Recibiendo de %s...\n' % (rank,name,prev_node) )
+
+            # b - reemplaza la primera incidencia de todas sus palabras
+            reemplazarPrimeraPalabra(libro_modificado)
+            # escribimos los cambios
+            with open('libroModificado.txt'+str(rank),'w') as target:
+                target.writelines(libro_modificado)
+
+            # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamanoAnillo )
+            next_node = int((rank+1)%size)
+
+            with open('libroModificado.txt'+str(rank),'r') as target:
+                sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
+                ' % (rank,name, next_node) )
+
+                comm.send( target.readlines() , dest=next_node, tag=77)
+
+        # 2 - si el rango del trabajador es igual a 0 (x == 0)
+        else:
+            # a - reemplaza la primera incidencia de todas sus palabras
+            reemplazarPrimeraPalabra(lineas_libro)
+            # escribimos los cambios
+            with open('libroModificado.txt.'+str(rank),'w') as target:
+                target.writelines(lineas_libro)
+                
+            # b - envia  el libro al siguiente
+            next_node = int((rank+1)%size)
+            with open('libroModificado.txt.'+str(rank),'r') as target:
+                sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
+                ' % (rank,name, next_node) )
+
+                comm.send( target.readlines() , dest=next_node, tag=77)
+            # c - recibo el libro del ultimo nodo del anillo, y me bloqueo 
+            #     mientras me llega el mensaje del ultimo (IMPORTANTE)
+            libro_modificado = list(comm.recv(source = size-2 ,tag=77))
+
+            # Linea de prueba
+            with open('libroModificado RESULTATE.txt','w') as target:
+                target.writelines(libro_modificado)
+
+            # d - envio libro modificado por todos los trabajadores a el coordinador
+                # NO IMPLEMENTADO
+
+
+
+
+
+
 
 if __name__ == '__main__':
     main()

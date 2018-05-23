@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --partition=piv                                           
+#SBATCH --partition=all                                      
 #SBATCH --job-name=proyecto1_py
 #SBATCH --time=01:00
 #SBATCH --output=Proyecto1.%j.out
@@ -21,7 +21,7 @@ function runScript {
    	# inicializamos el ambiente
    	initialize
    	echo -e "\n\n---------- Ejecucion de Script de Python -------------"
-	time prun Proyecto1.py
+	time prun python Proyecto1.py
 	echo -e "\n----------=====================-------------\n\n"
 }
 
