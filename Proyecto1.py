@@ -164,7 +164,11 @@ def main():
         print "Proceso",rank," --> recibi: ",len(data)
         
         # time.sleep(random.randint(1,(rank//3)+2))
+<<<<<<< HEAD
         
+=======
+        comm.send('Exito!', dest=size-1, tag=100)
+>>>>>>> 92b24c541afd5548cc36912a80e524f6e95f2ac3
         diccionarioE = data 
         inicializarMapa( diccionarioE )
         lineas_libro = []
@@ -185,7 +189,10 @@ def main():
             print('Hubo un error leyendo el libro: {}'.format(sys.exc_info()[0]))
             exit()
         
+<<<<<<< HEAD
         comm.send('Exito!', dest=size-1, tag=100)
+=======
+>>>>>>> 92b24c541afd5548cc36912a80e524f6e95f2ac3
 
 if __name__ == '__main__':
     main()
