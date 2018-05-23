@@ -14,13 +14,13 @@ PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
 # ----- /Variables Globales ------
 
 # ----- Funciones Para Leer, Contar y Modificar ------
-def reemplazarPrimeraPalabra(lineas_libro):
+def reemplazarPrimeraPalabra(lineas_libro,diccionarioE):
 
     # recorremos el mapa
     for palabra in mapa.keys():
         # si se encontro la palabra
         if mapa[palabra][0] != 0:
-            lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].lower().replace(palabra,diccionario[palabra])
+            lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].lower().replace(palabra,diccionarioE[palabra])
 
 
 
@@ -171,13 +171,13 @@ def main():
             sys.stdout.write('Proceso %s en %s...Recibiendo de %s...\n' % (rank,name,prev_node) )
 
             # b - reemplaza la primera incidencia de todas sus palabras
-            reemplazarPrimeraPalabra(libro_modificado)
+            reemplazarPrimeraPalabra(libro_modificado,diccionarioE)
             # escribimos los cambios
             with open('libroModificado.txt'+str(rank),'w') as target:
                 target.writelines(libro_modificado)
 
             # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamanoAnillo )
-            next_node = int((rank+1)%size)
+            next_node = int((rank+1)%(size-1))
 
             with open('libroModificado.txt'+str(rank),'r') as target:
                 sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
@@ -188,7 +188,7 @@ def main():
         # 2 - si el rango del trabajador es igual a 0 (x == 0)
         else:
             # a - reemplaza la primera incidencia de todas sus palabras
-            reemplazarPrimeraPalabra(lineas_libro)
+            reemplazarPrimeraPalabra(lineas_libro,diccionarioE)
             # escribimos los cambios
             with open('libroModificado.txt.'+str(rank),'w') as target:
                 target.writelines(lineas_libro)
