@@ -68,7 +68,9 @@ def limpiarString(linea):
 def extraerYOrdenarPalabrasDeMapa(mapaWorker):
     result = []
     for palabra in mapaWorker.keys():
-        result.append(palabra + " "+ str(mapaWorker[palabra][0]) )
+        auxPalabra = palabra + " "+ str(mapaWorker[palabra][0])
+        stringAEnviar = auxPalabra.lower()
+        result.append( stringAEnviar )
     result.sort()
     return result
 
@@ -134,7 +136,7 @@ def main():
                 if temp != None:
                     print "coordinador -> recibi: ",len(temp)," elementos De Proceso: ",nodo
                     contador += 1
-                    print "Hola soy algo nuevo=" + str(type(temp))
+                    print "Hola soy una lista" + str(temp )
 	        nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
 
