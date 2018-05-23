@@ -22,7 +22,10 @@ def reemplazarPrimeraPalabra(lineas_libro, diccionarioE):
         if mapa[palabra][0] != 0:
             lineas_libro[ mapa[palabra][1] ] = lineas_libro[ mapa[palabra][1] ].lower().replace(palabra,diccionarioE[palabra])
 
-
+def imprimiendoDiccionarioFinal( diccionario ):
+    with open('diccionarioFinalizado.txt', 'w') as diccionarioFinal:
+        for lineaDiccionario in diccionario:
+            diccionarioFinal.writelines( lineaDiccionario.capitalize() + "\n") 
 
 # recibe el diccionario que posee el esclavo
 def inicializarMapa( diccionarioE ):
@@ -127,6 +130,7 @@ def main():
         listaDiccionarioC = []
         while True:
             if contador == size-1:
+                imprimiendoDiccionarioFinal(listaDiccionarioC)
                 break
             if not iMensajes[nodo].Get_status():
                 time.sleep(0.1)
@@ -142,7 +146,6 @@ def main():
                     else:
                         listaDiccionarioC.extend( temp )
                         listaDiccionarioC.sort()
-                        print "Hola soy una lista ordenada" + str( listaDiccionarioC )
                         
                     contador += 1
                     
