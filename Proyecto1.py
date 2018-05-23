@@ -67,8 +67,8 @@ def limpiarString(linea):
 
 def extraerYOrdenarPalabrasDeMapa(mapaWorker):
     result = []
-    for palabra in mapaWorker.key():
-        result.append(str( palabra + " "+ mapaWorker[palabra][0] ))
+    for palabra in mapaWorker.keys():)
+        result.append(palabra + " "+ str(mapaWorker[palabra][0]) )
     result.sort()
     return result
 
