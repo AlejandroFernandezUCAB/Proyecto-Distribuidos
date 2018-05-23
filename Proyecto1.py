@@ -47,7 +47,7 @@ def contarPalabras(linea, indice):
                 mapa[palabra][1] = indice  # guardo la linea donde la encontre
 
             mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
-
+    
 
 # lee el archivo PATH_DICCIONARIO
 def cargarDiccionario():
@@ -174,13 +174,16 @@ def main():
         
         try:
             with open(PATH_LIBRO,'r') as libro:
+                comienzo = time.time()
                 # convertimos las lineas del libro en una lista de lineas
                 lineas_libro = libro.readlines()
                 print ('Proceso {} ---> Buscando palabras y generando mapa de incidencias...'.format( str(rank) ))
-
+                
                 for idx, linea in enumerate(lineas_libro):
                     # print(idx)
                     contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
+                tiempoTranscurrido = time.time() - comienzo
+                print "Soy el proceso:"+ str(rank) + " y transcurrieron " + str(tiempoTranscurrido) + " segundos ejecutando el proceso del libro"
                 #imprimir cantidad de palabras
                 #print ( '\n\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa)+"\n\n")
                 
