@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --partition=all                                      
 #SBATCH --job-name=proyecto1_py
-#SBATCH --time=01:00
+#SBATCH --time=02:00
 #SBATCH --output=Proyecto1.%j.out
 #SBATCH --ntasks=4
 
