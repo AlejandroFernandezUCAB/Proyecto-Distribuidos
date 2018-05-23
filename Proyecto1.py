@@ -124,6 +124,7 @@ def main():
         
         contador = 0
         nodo = 0
+        listaDiccionarioC = []
         while True:
             if contador == size-1:
                 break
@@ -135,8 +136,16 @@ def main():
                 temp = iMensajes[nodo].wait()
                 if temp != None:
                     print "coordinador -> recibi: ",len(temp)," elementos De Proceso: ",nodo
+
+                    if contador == 0:
+                        listaDiccionarioC.extend( temp )
+                    else:
+                        listaDiccionarioC.extend( temp )
+                        listaDiccionarioC.sort()
+                        print "Hola soy una lista ordenada" + str( listaDiccionarioC )
+                        
                     contador += 1
-                    print "Hola soy una lista" + str(temp )
+                    
 	        nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
 
