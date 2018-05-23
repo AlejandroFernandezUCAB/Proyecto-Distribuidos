@@ -64,6 +64,14 @@ def cargarDiccionario():
 def limpiarString(linea):
     return linea.replace("\n","").replace('"',"")
 
+
+def extraerYOrdenarPalabrasDeMapa(mapaWorker):
+    result = []
+    for palabra in mapaWorker.key():
+        result.append(str( palabra + " "+ mapaWorker[palabra][0] ))
+    result.sort()
+    return result
+
 def main():
     comm = MPI.COMM_WORLD
     size = comm.Get_size()
@@ -126,6 +134,7 @@ def main():
                 if temp != None:
                     print "coordinador -> recibi: ",len(temp)," elementos De Proceso: ",nodo
                     contador += 1
+                    print "Hola soy algo nuevo=" + str(type(temp))
 	        nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
 
@@ -159,13 +168,15 @@ def main():
                     # print(idx)
                     contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
                 #imprimir cantidad de palabras
-                print ( '\n\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa)+"\n\n")
+                #print ( '\n\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa)+"\n\n")
                 
         except:
             print('Hubo un error leyendo el libro: {}'.format(sys.exc_info()[0]))
             exit()
         
-        comm.send(mapa, dest=size-1, tag=100)
+
+        listaPalabras = extraerYOrdenarPalabrasDeMapa( mapa )
+        comm.send( listaPalabras , dest=size-1 , tag=100 ) 
         
         # - - - - - - - - - - - Codigo No Probado - - - - - - - - - - - - - - 
 
