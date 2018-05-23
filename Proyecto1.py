@@ -14,7 +14,7 @@ PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
 # ----- /Variables Globales ------
 
 # ----- Funciones Para Leer, Contar y Modificar ------
-def reemplazarPrimeraPalabra(lineas_libro,diccionarioE):
+def reemplazarPrimeraPalabra(lineas_libro, diccionarioE):
 
     # recorremos el mapa
     for palabra in mapa.keys():
@@ -124,10 +124,18 @@ def main():
             else:
                 temp = iMensajes[nodo].wait()
                 if temp != None:
-                    print "coordinador -> recibi: ",temp,". De Proceso: ",nodo
+                    print "coordinador -> recibi: ",len(temp)," elementos De Proceso: ",nodo
                     contador += 1
 	        nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
+
+        libro_modificado = list(comm.recv(source = size-2 ,tag=420))
+
+        print "coordinador -> Recibi Libro Modificado...Escribiendo En archivo..."
+
+        # Linea de prueba
+        with open('libroModificado RESULTATE.txt','w') as target:
+            target.writelines(libro_modificado)
 	
     # si eres trabajador
     else:
@@ -157,7 +165,7 @@ def main():
             print('Hubo un error leyendo el libro: {}'.format(sys.exc_info()[0]))
             exit()
         
-        comm.send('Exito!', dest=size-1, tag=100)
+        comm.send(mapa, dest=size-1, tag=100)
         
         # - - - - - - - - - - - Codigo No Probado - - - - - - - - - - - - - - 
 
@@ -177,13 +185,15 @@ def main():
                 target.writelines(libro_modificado)
 
             # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamanoAnillo )
-            next_node = int((rank+1)%(size-1))
-
+            next_node = int((rank+1)%size)
+            if next_node != size-1:
+                tag = 77
+            else:
+                tag = 420
             with open('libroModificado.txt'+str(rank),'r') as target:
                 sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
                 ' % (rank,name, next_node) )
-
-                comm.send( target.readlines() , dest=next_node, tag=77)
+                comm.send( target.readlines() , dest=next_node, tag=tag)
 
         # 2 - si el rango del trabajador es igual a 0 (x == 0)
         else:
@@ -200,19 +210,6 @@ def main():
                 ' % (rank,name, next_node) )
 
                 comm.send( target.readlines() , dest=next_node, tag=77)
-            # c - recibo el libro del ultimo nodo del anillo, y me bloqueo 
-            #     mientras me llega el mensaje del ultimo (IMPORTANTE)
-            libro_modificado = list(comm.recv(source = size-2 ,tag=77))
-
-            # Linea de prueba
-            with open('libroModificado RESULTATE.txt','w') as target:
-                target.writelines(libro_modificado)
-
-            # d - envio libro modificado por todos los trabajadores a el coordinador
-                # NO IMPLEMENTADO
-
-
-
 
 
 
