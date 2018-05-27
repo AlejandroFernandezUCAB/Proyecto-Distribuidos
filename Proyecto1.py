@@ -135,7 +135,7 @@ def main():
                 imprimiendoDiccionarioFinal(listaDiccionarioC)
                 break
             if not iMensajes[nodo].Get_status():
-                time.sleep(0.1)
+                # time.sleep(0.1)
 	        # print "espero a ",nodo
                 pass
             else:
@@ -151,7 +151,7 @@ def main():
                         
                     contador += 1
  
-	        nodo = (nodo+1)%size
+	    nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
 
         libro_modificado = list(comm.recv(source = size-2 ,tag=420))
@@ -195,7 +195,8 @@ def main():
         
 
         listaPalabras = extraerYOrdenarPalabrasDeMapa( mapa )
-        comm.send( listaPalabras , dest=size-1 , tag=100 ) 
+
+        comm.isend( listaPalabras , dest=size-1 , tag=100 ) 
         
         # - - - - - - - - - - - Codigo No Probado - - - - - - - - - - - - - - 
 
@@ -224,7 +225,7 @@ def main():
             #     sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
             #     ' % (rank,name, next_node) )
             
-            comm.send( libro_modificado , dest=next_node, tag=tag)
+            comm.isend( libro_modificado , dest=next_node, tag=tag)
 
         # 2 - si el rango del trabajador es igual a 0 (x == 0)
         else:
@@ -243,7 +244,7 @@ def main():
             #     sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
             #     ' % (rank,name, next_node) )
 
-            comm.send( lineas_libro , dest=next_node, tag=77)
+            comm.isend( lineas_libro , dest=next_node, tag=77)
 
 
 
