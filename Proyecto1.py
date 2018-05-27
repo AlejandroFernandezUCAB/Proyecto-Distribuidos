@@ -91,10 +91,7 @@ def main():
         cargarDiccionario()
         palabras = len(diccionario)
         print "Numero de palabras: {}".format(palabras)
-<<<<<<< HEAD
 
-=======
->>>>>>> 0466f2c9bb9cb9f3db1605a4fc43d154f81f9c2b
 
         chunksize = int(round(palabras/float(size)))
         print "palabras por nodo: {}".format(chunksize)
@@ -216,11 +213,8 @@ def main():
                 tag = 77
             else:
                 tag = 420
-            # with open('libroModificado.txt'+str(rank),'r') as target:
-            #     sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
-            #     ' % (rank,name, next_node) )
             
-            comm.isend( libro_modificado , dest=next_node, tag=tag)
+            comm.send( libro_modificado , dest=next_node, tag=tag)
 
         # 2 - si el rango del trabajador es igual a 0 (x == 0)
         else:
