@@ -1,15 +1,17 @@
+#!/usr/bin/env python
 from mpi4py import MPI
 import time
 import random
 import sys
+import os
 
 # -*- coding: utf-8 -()
 mapa = {}
 # diccionario que tiene las palabras y sus definiciones
 diccionario = {}
-
-PATH_LIBRO = 'libro_medicina.txt'
-PATH_DICCIONARIO = 'palabras_libro_medicina.txt'
+PATH_LOCAL = '/local_home/'+os.environ['USER']
+PATH_LIBRO = PATH_LOCAL + '/libro_medicina.txt'
+PATH_DICCIONARIO = PATH_LOCAL + '/palabras_libro_medicina.txt'
 
 # ----- /Variables Globales ------
 
@@ -39,7 +41,7 @@ def inicializarMapa( diccionarioE ):
 def contarPalabras(linea, indice):
     for palabra in mapa.keys():
         # busca la incidencia de la palabra en toda la linea
-        incidencias = linea.count(palabra,0,len(" "+linea+" "))
+        incidencias = linea.count(palabra,0,len(linea))
 
         if incidencias != 0:
 
@@ -47,13 +49,13 @@ def contarPalabras(linea, indice):
                 mapa[palabra][1] = indice  # guardo la linea donde la encontre
 
             mapa[palabra][0] += incidencias # aumenta la cuenta de la palabra
-    
+
 
 # lee el archivo PATH_DICCIONARIO
 def cargarDiccionario():
     with open(PATH_DICCIONARIO,'r') as diccionario_palabras:
         for line in diccionario_palabras:
-            splitUpLine = line.split(" ",1)
+            splitUpLine = line.lower().split(" ",1)
 
             palabra = splitUpLine[0]
             definicion = splitUpLine[1]
@@ -110,7 +112,7 @@ def main():
             elif i == size-2:
                 # temp = palabras[chunksize*i::]
                 temp = {element:diccionario[element] for idx,element in enumerate(diccionario) if (idx)>=chunksize*i and (idx)<=len(diccionario)}
-                print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",(chunksize*(1+i))-1,")"
+                print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",len(diccionario),")"
                 messagesSent.append(comm.send(temp,dest=i, tag=99))
                 #comm.send("hola soy tu padre", dest=i, tag=99)
 	        # print "enviando asincrono a ",i
@@ -140,7 +142,7 @@ def main():
                 temp = iMensajes[nodo].wait()
                 if temp != None:
                     print "coordinador -> recibi: ",len(temp)," elementos De Proceso: ",nodo
-
+                    
                     if contador == 0:
                         listaDiccionarioC.extend( temp )
                     else:
@@ -148,7 +150,7 @@ def main():
                         listaDiccionarioC.sort()
                         
                     contador += 1
-                    
+ 
 	        nodo = (nodo+1)%size
         print "coordinador -> sali del ciclo"
 
@@ -178,7 +180,7 @@ def main():
                 # convertimos las lineas del libro en una lista de lineas
                 lineas_libro = libro.readlines()
                 print ('Proceso {} ---> Buscando palabras y generando mapa de incidencias...'.format( str(rank) ))
-                
+
                 for idx, linea in enumerate(lineas_libro):
                     # print(idx)
                     contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
@@ -207,10 +209,10 @@ def main():
             sys.stdout.write('Proceso %s en %s...Recibiendo de %s...\n' % (rank,name,prev_node) )
 
             # b - reemplaza la primera incidencia de todas sus palabras
-            reemplazarPrimeraPalabra(libro_modificado,diccionarioE)
+            reemplazarPrimeraPalabra(libro_modificado,diccionarioE)     
             # escribimos los cambios
-            with open('libroModificado.txt'+str(rank),'w') as target:
-                target.writelines(libro_modificado)
+            #with open('libroModificado.txt'+str(rank),'w') as target:
+            #    target.writelines(libro_modificado)
 
             # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamanoAnillo )
             next_node = int((rank+1)%size)
@@ -218,26 +220,30 @@ def main():
                 tag = 77
             else:
                 tag = 420
-            with open('libroModificado.txt'+str(rank),'r') as target:
-                sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
-                ' % (rank,name, next_node) )
-                comm.send( target.readlines() , dest=next_node, tag=tag)
+            # with open('libroModificado.txt'+str(rank),'r') as target:
+            #     sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
+            #     ' % (rank,name, next_node) )
+            
+            comm.send( libro_modificado , dest=next_node, tag=tag)
 
         # 2 - si el rango del trabajador es igual a 0 (x == 0)
         else:
             # a - reemplaza la primera incidencia de todas sus palabras
             reemplazarPrimeraPalabra(lineas_libro,diccionarioE)
+            
+            
             # escribimos los cambios
-            with open('libroModificado.txt.'+str(rank),'w') as target:
-                target.writelines(lineas_libro)
+            # with open('libroModificado.txt.'+str(rank),'w') as target:
+            #    target.writelines(lineas_libro)
                 
             # b - envia  el libro al siguiente
             next_node = int((rank+1)%size)
-            with open('libroModificado.txt.'+str(rank),'r') as target:
-                sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
-                ' % (rank,name, next_node) )
 
-                comm.send( target.readlines() , dest=next_node, tag=77)
+            # with open('libroModificado.txt.'+str(rank),'r') as target:
+            #     sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
+            #     ' % (rank,name, next_node) )
+
+            comm.send( lineas_libro , dest=next_node, tag=77)
 
 
 
