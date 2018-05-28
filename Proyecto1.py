@@ -92,19 +92,16 @@ def main():
         palabras = len(diccionario)
         print "Numero de palabras: {}".format(palabras)
 
-        # nodos = size 
 
         chunksize = int(round(palabras/float(size)))
         print "palabras por nodo: {}".format(chunksize)
-        # workload = []
+
         messagesSent = []
         print "Proceso Coordinador envia palabras, de manera asincona"
         for i in range(size-1):
             # Envio a todos los Trabajadores
             if i < size-2:
                 temp = {element:diccionario[element] for idx,element in enumerate(diccionario) if (idx)>=chunksize*i and (idx)<chunksize*(1+i)}
-                #temp = palabras[chunksize*i:chunksize*(1+i):]
-                
                 print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",(chunksize*(1+i))-1,")"
                 # ENVIO SINCRONO F U N C I O N A
                 messagesSent.append(comm.isend(temp,dest=i,tag=99))
@@ -114,7 +111,6 @@ def main():
                 temp = {element:diccionario[element] for idx,element in enumerate(diccionario) if (idx)>=chunksize*i and (idx)<=len(diccionario)}
                 print "coordinador --> voy a enviar: ",len(temp)," a proceso ",i, ". (",chunksize*i,",",len(diccionario),")"
                 messagesSent.append(comm.send(temp,dest=i, tag=99))
-                #comm.send("hola soy tu padre", dest=i, tag=99)
 	        # print "enviando asincrono a ",i
 	
         print "coordinador termino envio asincrono"
@@ -198,7 +194,6 @@ def main():
 
         comm.isend( listaPalabras , dest=size-1 , tag=100 ) 
         
-        # - - - - - - - - - - - Codigo No Probado - - - - - - - - - - - - - - 
 
         # F A S E  2
         # 1 - si el rango del trabajador es diferente a 0 (x != 0)
@@ -212,42 +207,23 @@ def main():
             # b - reemplaza la primera incidencia de todas sus palabras
             reemplazarPrimeraPalabra(libro_modificado,diccionarioE)     
             # escribimos los cambios
-            #with open('libroModificado.txt'+str(rank),'w') as target:
-            #    target.writelines(libro_modificado)
-
             # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamanoAnillo )
             next_node = int((rank+1)%size)
             if next_node != size-1:
                 tag = 77
             else:
                 tag = 420
-            # with open('libroModificado.txt'+str(rank),'r') as target:
-            #     sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
-            #     ' % (rank,name, next_node) )
             
-            comm.isend( libro_modificado , dest=next_node, tag=tag)
+            comm.send( libro_modificado , dest=next_node, tag=tag)
 
         # 2 - si el rango del trabajador es igual a 0 (x == 0)
         else:
             # a - reemplaza la primera incidencia de todas sus palabras
             reemplazarPrimeraPalabra(lineas_libro,diccionarioE)
-            
-            
             # escribimos los cambios
-            # with open('libroModificado.txt.'+str(rank),'w') as target:
-            #    target.writelines(lineas_libro)
-                
             # b - envia  el libro al siguiente
             next_node = int((rank+1)%size)
-
-            # with open('libroModificado.txt.'+str(rank),'r') as target:
-            #     sys.stdout.write('Proceso %s en %s -> envia a proceso %s...Enviando...\n\
-            #     ' % (rank,name, next_node) )
-
-            comm.isend( lineas_libro , dest=next_node, tag=77)
-
-
-
+            comm.send( lineas_libro , dest=next_node, tag=77)
 
 if __name__ == '__main__':
     main()
