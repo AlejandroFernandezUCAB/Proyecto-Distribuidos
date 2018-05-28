@@ -181,7 +181,8 @@ def main():
                     # print(idx)
                     contarPalabras(linea.lower(), idx) # convertimos todas las palabras a minusculas...
                 tiempoTranscurrido = time.time() - comienzo
-                print "Soy el proceso:"+ str(rank) + " y transcurrieron " + str(tiempoTranscurrido) + " segundos ejecutando el proceso del libro"
+                tiempoTranscurridoFase1 = tiempoTranscurrido
+                print "Soy el proceso:"+ str(rank) + " de la fase 1 y transcurrieron " + str(tiempoTranscurrido) + " segundos ejecutando el proceso del libro"
                 #imprimir cantidad de palabras
                 #print ( '\n\nProceso ' + str(rank) + ' leyo :\n'+ str(mapa)+"\n\n")
                 
@@ -205,7 +206,11 @@ def main():
             sys.stdout.write('Proceso %s en %s...Recibiendo de %s...\n' % (rank,name,prev_node) )
 
             # b - reemplaza la primera incidencia de todas sus palabras
+            comienzoParte2 = time.time()
             reemplazarPrimeraPalabra(libro_modificado,diccionarioE)     
+            tiempoTranscurridoParte2 = time.time() - comienzo
+            tiempoTranscurridoFase2 = tiempoTranscurridoParte2
+            print "Soy el proceso:"+ str(rank) + " de la fase 2 y transcurrieron " + str(tiempoTranscurridoParte2) + " segundos ejecutando el proceso del libro"
             # escribimos los cambios
             # c - envia  el libro al siguiente (siguiente = (rango + 1)%TamanoAnillo )
             next_node = int((rank+1)%size)
@@ -224,6 +229,22 @@ def main():
             # b - envia  el libro al siguiente
             next_node = int((rank+1)%size)
             comm.send( lineas_libro , dest=next_node, tag=77)
+
+    #Aqui mando al nodo coordinador los resultados de los tiempos de la fase 1
+    if rank == size -1:
+        dataTiempoFase1 = comm.gather( 0 , root = (size -1))
+        dataTiempoFase1.remove(0)
+        print "Estos son los resultados de la primera fase (Todo presentado en segundos):", dataTiempoFase1
+    else:
+        dataTiempoFase1 = comm.gather( tiempoTranscurridoFase1 , root = (size -1))
+
+        #Aqui mando al nodo coordinador los resultados de los tiempos de la fase 1
+    if rank == size -1:
+        dataTiempoFase2 = comm.gather( 0 , root = (size -1))
+        dataTiempoFase2.remove(0)
+        print "Estos son los resultados de la primera fase (Todo presentado en segundos):", dataTiempoFase2
+    else:
+        dataTiempoFase1 = comm.gather( tiempoTranscurridoFase2 , root = (size -1))
 
 if __name__ == '__main__':
     main()
