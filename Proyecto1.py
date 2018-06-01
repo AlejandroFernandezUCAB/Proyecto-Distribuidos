@@ -43,7 +43,7 @@ def inicializarMapa( diccionarioE ):
 def contarPalabras(linea, indice):
     for palabra in mapa.keys():
         # busca la incidencia de la palabra en toda la linea
-        incidencias = linea.count(palabra,0,len(linea))
+        incidencias = linea.lower().count(palabra,0,len(linea))
 
         if incidencias != 0:
 
