@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --partition=all                                      
+#SBATCH --partition=piv                                   
 #SBATCH --job-name=proyecto1_py
-#SBATCH --time=02:00
+#SBATCH --time=03:00
 #SBATCH --output=Proyecto1.%j.out
-#SBATCH --ntasks=21
+#SBATCH --ntasks=11
 
 # nota:
 # recordar dejar espacio entre nombre de la funcion y la llave
@@ -12,13 +12,14 @@ function enviarLibroYpalabras {
     export PALABRAS=palabras_libro_medicina.txt
     export LOCAL_HOME=/local_home/$USER
     export WP=$(pwd)
-    export LAST_NODE=$(python GetLastNode.py $SLURM_NTASKS)
+    # export LAST_NODE=$(python GetLastNode.py $SLURM_NTASKS)
+    export LAST_NODE=$(python GetLastNode2.py $SLURM_NODELIST)
     # echo $(hostname)": Creando archivo $IN_FILE"
     # find / -type f 1> $IN_FILE
 
     echo $(hostname)": Tansfiriendo archivo $WP/$LIBRO_MED a $LOCAL_HOME/$LIBRO_MED en los nodos $SLURM_NODELIST"
     PDSH_SSH_ARGS_APPEND="-o StrictHostKeyChecking=no" pdsh -w $SLURM_NODELIST cp $WP/$LIBRO_MED $LOCAL_HOME
-    echo $(hostname)": Transfiriendo archivo $WP/$LIBRO_MED al coordinador (El Ultimo Proceso)"
+    echo $(hostname)": Transfiriendo archivo $WP/$LIBRO_MED al coordinador beehive-node$LAST_NODE (El Ultimo Proceso)"
     PDSH_SSH_ARGS_APPEND="-o StrictHostKeyChecking=no" pdsh -w beehive-node$LAST_NODE cp $WP/$PALABRAS $LOCAL_HOME
 }
 
