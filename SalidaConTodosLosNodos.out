@@ -1,0 +1,167 @@
+beehive-node1: Tansfiriendo archivo /home/group/distribuidos/201825_25789/13/pruebas/Proyecto/libro_medicina.txt a /local_home/pafernandez.14/libro_medicina.txt en los nodos beehive-node[1-11]
+beehive-node1: Transfiriendo archivo /home/group/distribuidos/201825_25789/13/pruebas/Proyecto/libro_medicina.txt al coordinador beehive-node11 (El Ultimo Proceso)
+----------Preparando el entorno-------------
+	Modulos cargados...
+----------=====================-------------
+
+
+
+---------- Ejecucion de Script de Python -------------
+[prun] Master compute host = beehive-node1
+[prun] Resource manager = slurm
+[prun] Launch cmd = mpirun python Proyecto1.py (family=openmpi3)
+Numero de palabras: 897
+palabras por nodo: 43
+Proceso Coordinador envia palabras, de manera asincona
+coordinador --> voy a enviar:  43  a proceso  0 . ( 0 , 42 )
+coordinador --> voy a enviar:  43  a proceso  1 . ( 43 , 85 )
+coordinador --> voy a enviar:  43  a proceso  2 . ( 86 , 128 )
+coordinador --> voy a enviar:  43  a proceso  3 . ( 129 , 171 )
+coordinador --> voy a enviar:  43  a proceso  4 . ( 172 , 214 )
+coordinador --> voy a enviar:  43  a proceso  5 . ( 215 , 257 )
+coordinador --> voy a enviar:  43  a proceso  6 . ( 258 , 300 )
+coordinador --> voy a enviar:  43  a proceso  7 . ( 301 , 343 )
+coordinador --> voy a enviar:  43  a proceso  8 . ( 344 , 386 )
+coordinador --> voy a enviar:  43  a proceso  9 . ( 387 , 429 )
+coordinador --> voy a enviar:  43  a proceso  10 . ( 430 , 472 )
+coordinador --> voy a enviar:  43  a proceso  11 . ( 473 , 515 )
+coordinador --> voy a enviar:  43  a proceso  12 . ( 516 , 558 )
+coordinador --> voy a enviar:  43  a proceso  13 . ( 559 , 601 )
+coordinador --> voy a enviar:  43  a proceso  14 . ( 602 , 644 )
+coordinador --> voy a enviar:  43  a proceso  15 . ( 645 , 687 )
+coordinador --> voy a enviar:  43  a proceso  16 . ( 688 , 730 )
+coordinador --> voy a enviar:  43  a proceso  17 . ( 731 , 773 )
+coordinador --> voy a enviar:  43  a proceso  18 . ( 774 , 816 )
+coordinador --> voy a enviar:  80  a proceso  19 . ( 817 , 897 )
+coordinador termino envio asincrono
+Nodo coordinador espera respuesta de manera asincrona
+Proceso 18  --> recibi:  43
+Proceso 19  --> recibi:  80
+Proceso 16  --> recibi:  43
+Proceso 17  --> recibi:  43
+Proceso 2  --> recibi:  43
+Proceso 3  --> recibi:  43
+Proceso 10  --> recibi:  43
+Proceso 11  --> recibi:  43
+Proceso 14  --> recibi:  43
+Proceso 8  --> recibi:  43
+Proceso 15  --> recibi:  43
+Proceso 9  --> recibi:  43
+Proceso 4  --> recibi:  43
+Proceso 5  --> recibi:  43
+Proceso 12  --> recibi:  43
+Proceso 13  --> recibi:  43
+Proceso 6  --> recibi:  43
+Proceso 7  --> recibi:  43
+Proceso 1  --> recibi:  43
+Proceso 0  --> recibi:  43
+Proceso 18 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 19 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 16 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 17 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 14 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 12 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 13 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 15 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 2 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 3 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 10 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 11 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 6 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 7 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 1 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 4 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 5 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 8 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 9 ---> Buscando palabras y generando mapa de incidencias...
+Proceso 0 ---> Buscando palabras y generando mapa de incidencias...
+Soy el proceso:17 de la fase 1 y transcurrieron 3.92172789574 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  17
+Soy el proceso:14 de la fase 1 y transcurrieron 3.94886684418 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  14
+Soy el proceso:18 de la fase 1 y transcurrieron 3.96022796631 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  18
+Soy el proceso:16 de la fase 1 y transcurrieron 3.97789382935 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  16
+Soy el proceso:12 de la fase 1 y transcurrieron 4.00176119804 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  12
+Soy el proceso:15 de la fase 1 y transcurrieron 4.04419803619 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  15
+Soy el proceso:13 de la fase 1 y transcurrieron 4.05201911926 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  13
+Soy el proceso:19 de la fase 1 y transcurrieron 7.34146904945 segundos ejecutando el proceso del libro
+coordinador -> recibi:  80  elementos De Proceso:  19
+Soy el proceso:5 de la fase 1 y transcurrieron 10.4895939827 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  5
+Soy el proceso:8 de la fase 1 y transcurrieron 10.5999591351 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  8
+Soy el proceso:4 de la fase 1 y transcurrieron 10.604090929 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  4
+Soy el proceso:9 de la fase 1 y transcurrieron 10.6833460331 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  9
+Soy el proceso:11 de la fase 1 y transcurrieron 10.7757780552 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  11
+Soy el proceso:7 de la fase 1 y transcurrieron 10.7828321457 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  7
+Soy el proceso:10 de la fase 1 y transcurrieron 10.8203818798 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  10
+Soy el proceso:6 de la fase 1 y transcurrieron 10.9423410892 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  6
+Soy el proceso:0 de la fase 1 y transcurrieron 10.9794869423 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  0
+Soy el proceso:2 de la fase 1 y transcurrieron 11.0746898651 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  2
+Soy el proceso:3 de la fase 1 y transcurrieron 11.093048811 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  3
+Soy el proceso:1 de la fase 1 y transcurrieron 11.2125549316 segundos ejecutando el proceso del libro
+coordinador -> recibi:  43  elementos De Proceso:  1
+coordinador -> sali del ciclo
+Proceso 1 en beehive-node1...Recibiendo de 0...
+Soy el proceso:1 de la fase 2 y transcurrieron 11.2804999352 segundos ejecutando el proceso del libro
+Proceso 2 en beehive-node2...Recibiendo de 1...
+Soy el proceso:2 de la fase 2 y transcurrieron 11.5479428768 segundos ejecutando el proceso del libro
+Proceso 3 en beehive-node2...Recibiendo de 2...
+Soy el proceso:3 de la fase 2 y transcurrieron 11.7951397896 segundos ejecutando el proceso del libro
+Proceso 4 en beehive-node3...Recibiendo de 3...
+Soy el proceso:4 de la fase 2 y transcurrieron 12.0590028763 segundos ejecutando el proceso del libro
+Proceso 5 en beehive-node3...Recibiendo de 4...
+Soy el proceso:5 de la fase 2 y transcurrieron 12.3421499729 segundos ejecutando el proceso del libro
+Proceso 6 en beehive-node4...Recibiendo de 5...
+Soy el proceso:6 de la fase 2 y transcurrieron 12.6292319298 segundos ejecutando el proceso del libro
+Proceso 7 en beehive-node4...Recibiendo de 6...
+Soy el proceso:7 de la fase 2 y transcurrieron 12.8738269806 segundos ejecutando el proceso del libro
+Proceso 8 en beehive-node5...Recibiendo de 7...
+Soy el proceso:8 de la fase 2 y transcurrieron 13.1448841095 segundos ejecutando el proceso del libro
+Proceso 9 en beehive-node5...Recibiendo de 8...
+Soy el proceso:9 de la fase 2 y transcurrieron 13.41614604 segundos ejecutando el proceso del libro
+Proceso 10 en beehive-node6...Recibiendo de 9...
+Soy el proceso:10 de la fase 2 y transcurrieron 13.6917660236 segundos ejecutando el proceso del libro
+Proceso 11 en beehive-node6...Recibiendo de 10...
+Soy el proceso:11 de la fase 2 y transcurrieron 13.9528980255 segundos ejecutando el proceso del libro
+Proceso 12 en beehive-node7...Recibiendo de 11...
+Soy el proceso:12 de la fase 2 y transcurrieron 14.1942980289 segundos ejecutando el proceso del libro
+Proceso 13 en beehive-node7...Recibiendo de 12...
+Soy el proceso:13 de la fase 2 y transcurrieron 14.3665590286 segundos ejecutando el proceso del libro
+Proceso 14 en beehive-node8...Recibiendo de 13...
+Soy el proceso:14 de la fase 2 y transcurrieron 14.5824708939 segundos ejecutando el proceso del libro
+Proceso 15 en beehive-node8...Recibiendo de 14...
+Soy el proceso:15 de la fase 2 y transcurrieron 14.7623651028 segundos ejecutando el proceso del libro
+Proceso 16 en beehive-node9...Recibiendo de 15...
+Soy el proceso:16 de la fase 2 y transcurrieron 14.9733529091 segundos ejecutando el proceso del libro
+Proceso 17 en beehive-node9...Recibiendo de 16...
+Soy el proceso:17 de la fase 2 y transcurrieron 15.1484689713 segundos ejecutando el proceso del libro
+Proceso 18 en beehive-node10...Recibiendo de 17...
+Soy el proceso:18 de la fase 2 y transcurrieron 15.361574173 segundos ejecutando el proceso del libro
+Proceso 19 en beehive-node10...Recibiendo de 18...
+Soy el proceso:19 de la fase 2 y transcurrieron 15.5489521027 segundos ejecutando el proceso del libro
+coordinador -> Recibi Libro Modificado...Escribiendo En archivo...
+Estos son los resultados de la primera fase (Todo presentado en segundos): [10.979, 11.213, 11.075, 11.093, 10.604, 10.49, 10.942, 10.783, 10.6, 10.683, 10.82, 10.776, 4.002, 4.052, 3.949, 4.044, 3.978, 3.922, 3.96, 7.341]
+Estos son los resultados de la primera fase (Todo presentado en segundos): [10.981, 11.28, 11.548, 11.795, 12.059, 12.342, 12.629, 12.874, 13.145, 13.416, 13.692, 13.953, 14.194, 14.367, 14.582, 14.762, 14.973, 15.148, 15.362, 15.549]
+
+real	0m19.251s
+user	0m23.693s
+sys	0m0.992s
+
+----------=====================-------------
+
+
